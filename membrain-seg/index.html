@@ -77,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#membrain-seg" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -286,6 +291,19 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Membrain-Seg Segmentation
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -296,6 +314,52 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-membrain-seg" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running Membrain-Seg
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#separating-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Separating components
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -358,6 +422,43 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setup
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-membrain-seg" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running Membrain-Seg
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#separating-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Separating components
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -375,9 +476,25 @@
   
 
 
-  <h1>Membrain-Seg Segmentation</h1>
-
-
+<h1 id="membrain-seg">Membrain-Seg</h1>
+<p>Membrain-Seg is a relatively new tool for segmenting membranes in cryo-ET data. It is based on a deep learning model that has been trained on a variety of cellular tomograms. The model is able to segment membranes with high accuracy with a pretrained model, which makes it pretty much bulletproof as a first step for starting the segmentation process. If you want to do morphometrics, you can pretty quickly move from the Membrain-Seg output to a mesh using the <code>segmentation_to_meshes.py</code> script in the <code>surface_morphometrics</code> package (though I recommend you extract the individual components into their own classes first using dragonfly or amira).</p>
+<h2 id="setup">Setup</h2>
+<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>activate<span class="w"> </span>membrain-seg
+</code></pre></div>
+<h2 id="running-membrain-seg">Running Membrain-Seg</h2>
+<div class="highlight"><pre><span></span><code>membrain<span class="w"> </span>segment<span class="w"> </span>--tomogram-path<span class="w"> </span>TE3_tomo.mrc<span class="w"> </span>--ckpt-path<span class="w"> </span>/sw/membrain-seg/models/MemBrain_seg_v10_alpha_MONAI1.3.0.ckpt<span class="w"> </span>--store-probabilities
+3dmod<span class="w"> </span>&lt;path_to_predictions&gt;
+</code></pre></div>
+<p>Usually, this is all you have to do. However, sometimes the default threshold is a bit too generous, and membranes merge into each other. This is bad. If this happens, you can try to adjust the threshold by running the following command:</p>
+<p><div class="highlight"><pre><span></span><code>3dmod<span class="w"> </span>&lt;path<span class="w"> </span>to<span class="w"> </span>scoremap&gt;
+membrain<span class="w"> </span>thresholds<span class="w"> </span>--scoremap-path<span class="w"> </span>&lt;path_to_scoremap&gt;--thresholds<span class="w"> </span>X
+</code></pre></div>
+Determine X by looking at the pixel levels in the score map! You want to set the threshold so that the membranes are well separated.</p>
+<h2 id="separating-components">Separating components</h2>
+<p>I recommend using Amira or Dragonfly to separate components into semantic classes manually, but you can also use the following command to do it automatically:</p>
+<div class="highlight"><pre><span></span><code>membrain<span class="w"> </span>components<span class="w"> </span>--segmentation-path<span class="w"> </span>&lt;path-to-your-segmentation&gt;<span class="w"> </span>--connected-component-thres<span class="w"> </span><span class="m">50</span>
+</code></pre></div>
+<p>And thats it! You should now have a set of membrane segmentations that are ready to be turned into meshes for morphometrics! For today's exercises, we will use these segmentations to help with dragonfly, but we will use some precalculated segmentations for morphometrics. If you are feeling brave, feel free to freelance during the morphometrics section and use this seg! It might be quite a bit better than the one we will be using.</p>
 
 
 
@@ -409,7 +526,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright &copy; 2022 - 2022 teamtomo
+      Copyright &copy; 2024 baradlab
     </div>
   
   

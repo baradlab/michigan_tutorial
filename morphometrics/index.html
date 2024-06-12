@@ -415,9 +415,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#pipelined-steps" class="md-nav__link">
+  <a href="#pipelined-processing-steps" class="md-nav__link">
     <span class="md-ellipsis">
-      Pipelined Steps
+      Pipelined Processing Steps
     </span>
   </a>
   
@@ -439,9 +439,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#examples-of-generating-statistics-and-plots" class="md-nav__link">
+  <a href="#visualizing-the-surfaces" class="md-nav__link">
     <span class="md-ellipsis">
-      Examples of generating statistics and plots:
+      Visualizing the surfaces
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generating-some-basic-statistics-and-plots" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generating some basic statistics and plots
     </span>
   </a>
   
@@ -551,9 +560,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#pipelined-steps" class="md-nav__link">
+  <a href="#pipelined-processing-steps" class="md-nav__link">
     <span class="md-ellipsis">
-      Pipelined Steps
+      Pipelined Processing Steps
     </span>
   </a>
   
@@ -575,9 +584,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#examples-of-generating-statistics-and-plots" class="md-nav__link">
+  <a href="#visualizing-the-surfaces" class="md-nav__link">
     <span class="md-ellipsis">
-      Examples of generating statistics and plots:
+      Visualizing the surfaces
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generating-some-basic-statistics-and-plots" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generating some basic statistics and plots
     </span>
   </a>
   
@@ -627,20 +645,24 @@
 <h1 id="surface-morphometrics">Surface Morphometrics</h1>
 <p><img alt="Workflow Figure" src="https://raw.githubusercontent.com/GrotjahnLab/surface_morphometrics/master/Workflow_title.png" /></p>
 <h3 id="quantification-of-membrane-surfaces-segmented-from-cryo-et-or-other-volumetric-imaging">Quantification of Membrane Surfaces Segmented from Cryo-ET or other volumetric imaging.</h3>
-<p>Surface morphometrics is the toolbox I developed during my postdoc to develop </p>
+<p>Surface morphometrics is a toolbox I developed during my postdoc to better understand how mitochondrial membranes remodel during stress. It turns out to be useful for a whole lot more than mitochondria! You can use it to assess aspects of membrane geometry in detail both locally and globally within cells, thanks to a robust meshing (modeling) algorithm and a set of simple tools for making measurements on the resulting surfaces.</p>
+<p>Today we will scratch the surface with a single tomogram, but one of the most valuable aspects of building models and making quantifications is that it becomes possible to assess statistical significance by comparing quantifications across many tomograms in different cells and conditions. This is a powerful way to move from qualitative phenomenology about cellular remodeling to robust quantitative understanding of the underlying biology. With one tomogram, we're mostly still doing phenomenology.</p>
 <h2 id="setup">Setup:</h2>
 <ol>
 <li>Activate your conda environment and move to the morpho_run folder: 
 <div class="highlight"><pre><span></span><code>conda<span class="w"> </span>activate<span class="w"> </span>morphometrics
-<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/scratch/segmentation_dataset/surface_morphometrics
 <span class="nb">cd</span><span class="w"> </span>/scratch/segmentation_dataset/morpho_run
 </code></pre></div></li>
 <li>Edit the <code>config.yml</code> file for our project's needs. I prefer visual studio code for this!<ul>
 <li>Set the <code>data_folder</code> to the folder containing your label file (<code>/scratch/segmentation_dataset/morpho_run/datadir</code>)</li>
 <li>Set the <code>output_folder</code> to the folder where you want the output files to be saved (<code>/scratch/segmentation_dataset/morpho_run/workdir</code>)</li>
+<li>For <code>segmentation_values</code>, use <code>-127</code> for the OMM and <code>-126</code> for the IMM.</li>
 <li>Set the <code>max_triangles</code> to 50,000 to speed up computation - this will reduce the quality of the final surfaces so don't do this when you are running at home!</li>
 <li>Set the <code>num_cores</code> to 16.</li>
-<li>Set the </li>
+<li>Set the <code>radius_hit</code> to 10.</li>
+<li>Set <code>exclude_borders</code> to 1.</li>
+<li>For <code>intra</code>, provide <code>IMM</code> and <code>OMM</code></li>
+<li>For <code>inter</code>, provide <code>IMM</code>: <code>OMM</code></li>
 </ul>
 </li>
 </ol>
@@ -649,27 +671,64 @@
 <div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>imod
 header<span class="w"> </span>/scratch/segmentation_dataset/morpho_run/datadir/TE3_labels.mrc
 header<span class="w"> </span>/scratch/segmentation_dataset/TE3_tomo.mrc
+3dmod<span class="w"> </span>/scratch/segmentation_dataset/morpho_run/datadir/TE3_labels.mrc
+3dmod<span class="w"> </span>/scratch/segmentation_dataset/TE3_tomo.mrc
 </code></pre></div></p>
 <h2 id="processing-your-data">Processing your data</h2>
 <h3 id="interactive-mesh-generation">Interactive mesh generation</h3>
-<p>We are going to do semi-interactive mesh generation in meshlab to teach you how the sausage is made, but there is also a fully configurable pipeline (<code>python segmentation_to_meshes.py config.yml</code>) that will do the whole thing for you.
-1. Prepare the xyz point cloud files to make new meshes: <code>python xyz2ply.py config.yml</code></p>
-<h3 id="pipelined-steps">Pipelined Steps</h3>
+<p>We are going to do semi-interactive mesh generation in meshlab to teach you how the sausage is made, but there is also a fully configurable pipeline (<code>python ../surface_morphometrics/segmentation_to_meshes.py config.yml</code>) that will do the whole thing for you.</p>
 <ol>
+<li>Prepare the xyz point cloud files to make new meshes: 
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/scratch/segmentation_dataset/morpho_run
+python<span class="w"> </span>../surface_morphometrics/mrc2xyz.py<span class="w"> </span>-l<span class="w"> </span>-127<span class="w"> </span>datadir/TE3_labels.mrc<span class="w"> </span>workdir/TE3_OMM.xyz
+python<span class="w"> </span>../surface_morphometrics/mrc2xyz.py<span class="w"> </span>-l<span class="w"> </span>-126<span class="w"> </span>datadir/TE3_labels.mrc<span class="w"> </span>workdir/TE3_IMM.xyz
+</code></pre></div></li>
+<li>Launch <code>Meshlab</code>
+<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>meshlab
+meshlab
+</code></pre></div></li>
+<li>For each mesh file:<ol>
+<li>Filters-&gt;Normals, Curvatures, and Orientation-&gt;Compute Normals for Point Sets</li>
+<li>Filters-&gt;Remeshing, Simplification, and Reconstruction-&gt;Screened Poisson Surface Reconstruction</li>
+<li>Filters-&gt;Selection-&gt;Select Faces by Vertex Quality</li>
+<li>Filters-&gt;Selection-&gt;Delete Selected Faces</li>
+<li>Filters-&gt;Remeshing, Simplification, and Reconstruction-&gt;Quadric Edge Collapse Decimation</li>
+<li>File-&gt;Export Mesh As...-&gt;TE3_OMM.ply</li>
+</ol>
+</li>
+</ol>
+<h3 id="pipelined-processing-steps">Pipelined Processing Steps</h3>
+<ol>
+<li>If you wanted to make the meshes automatically: <code>python ../surface_morphometrics/segmentation_to_meshes.py config.yml</code>. We aren't doing this today because I think its more fun to do by hand. If you have 30 tomograms each with 3-5 labels, it will no longer be fun.</li>
+<li>Convert the ply files to vtp files: <code>python ../surface_morphometrics/ply2vtp.py config.yml TE3_OMM.ply TE3_OMM.surface.vtp</code>. Do this again for IMM.</li>
 <li>Run pycurv for each surface (normally, this is best run in parallel on a cluster): 
-    <code>python run_pycurv.py config.yml TE3_OMM.surface.vtp</code>. Do this again for IMM (it will take a long time for IMM!)
+    <code>python ../surface_morphometrics/run_pycurv.py config.yml TE3_OMM.surface.vtp</code>. Do this again for IMM (it will take a long time for IMM!)
     You may see warnings aobut the curvature, this is normal and you do not need to worry.
     We may run into memory constraints - if you do, you can reduce the number of triangles in the surface by setting <code>max_triangles</code> to a lower number in the config file. This will reduce the quality of the final surfaces, but will make the computation faster and lower-memory.</li>
-<li>Measure intra- and inter-surface distances and orientations (also best to run this one in parallel for each original segmentation): <code>python measure_distances_orientations.py config.yml ${i}.mrc</code></li>
-<li>Combine the results of the pycurv analysis into aggregate Experiments and generate statistics and plots. This requires some manual coding using the Experiment class and its associated methods in the <code>morphometrics_stats.py</code>. Everything is roughly organized around working with the CSVs in pandas dataframes. Running  <code>morphometrics_stats.py</code> as a script with the config file and a filename will output a pickle file with an assembled "experiment" object for all the tomos in the data folder. Reusing a pickle file will make your life way easier if you have dozens of tomograms to work with, but it doesn't save too much time with just the example data...</li>
+<li>Measure intra- and inter-surface distances and orientations (also best to run this one in parallel for each original segmentation): <code>python ../surface_morphometrics/measure_distances_orientations.py config.yml</code></li>
+<li>Don't do this today: Combine the results of the pycurv analysis into aggregate Experiments and generate statistics and plots. This requires some manual coding using the Experiment class and its associated methods in the <code>morphometrics_stats.py</code>. Everything is roughly organized around working with the CSVs in pandas dataframes. Running  <code>morphometrics_stats.py</code> as a script with the config file and a filename will output a pickle file with an assembled "experiment" object for all the tomos in the data folder. Reusing a pickle file will make your life way easier if you have dozens of tomograms to work with, but it doesn't save too much time with just the example data...</li>
 </ol>
-<p>Just in case you have problems running things fast (I don't have a great sense of how long this will take on these machines), I have provided usable output files for the downstream analysis you might want to try.</p>
+<p>Just in case you have problems running things fast (I don't have a great sense of how long this will take on these machines), I have provided usable output files for the downstream analysis you might want to check out. You can find them in the <code>morpho_run/workdir</code> folder.</p>
 <h2 id="inspecting-results">Inspecting Results</h2>
-<h3 id="examples-of-generating-statistics-and-plots">Examples of generating statistics and plots:</h3>
+<h3 id="visualizing-the-surfaces">Visualizing the surfaces</h3>
+<ol>
+<li>Load the surfaces in Paraview: <ul>
+<li>Open Paraview</li>
+<li>File -&gt; Open -&gt; TE3_OMM.surface.vtp</li>
+<li>File -&gt; Open -&gt; TE3_IMM.surface.vtp</li>
+<li>Make each visible</li>
+<li>Color by <code>curvedness_vv</code> to see the curvature of the surface</li>
+<li>Color by <code>OMM_dist</code> (or <code>IMM_dist</code>) to see the distance from the IMM to the OMM or visa-versa</li>
+</ul>
+</li>
+<li>Adjust color scales to see the features you are interested in. Add and edit the scalebar.</li>
+<li>Adjust the background, turn on ambient occlusion, and make the surfaces look nice for a screenshot.</li>
+<li>Take some nice pictures!</li>
+</ol>
+<h3 id="generating-some-basic-statistics-and-plots">Generating some basic statistics and plots</h3>
 <ul>
-<li><code>python single_file_histogram.py workdir/TE3_labels..csv -n curvedness_vv</code> will generate an area-weighted histogram for a feature of interest in a single tomogram. I am using a variant of this script to respond to reviews asking for more per-tomogram visualizations!</li>
-<li><code>python single_file_2d.py filename.csv -n1 feature1 -n2 feature2</code> will generate a 2D histogram for 2 features of interest for a single surface.</li>
-<li><code>mitochondria_statistics.py</code> shows analysis and comparison of multiple experiment objects for different sets of tomograms (grouped by treatment in this case). Every single plot and statistic in the preprint version of the paper gets generated by this script.</li>
+<li><code>python ../surface_morphometrics/single_file_histogram.py workdir/TE3_IMM.AVV_rh8.csv -n curvedness_vv</code> will generate an area-weighted histogram for a feature of interest in a single tomogram. I am using a variant of this script to respond to reviews asking for more per-tomogram visualizations!</li>
+<li><code>python ../surface_morphometrics/single_file_2d.py workdir/TE3_IMM.AVV_rh8.csv -n1 curvedness_vv -n2 OMM_dist</code> will generate a 2D histogram for 2 features of interest for a single surface.</li>
 </ul>
 <h2 id="running-individual-steps-without-pipelining">Running individual steps without pipelining</h2>
 <p>Individual steps are available as click commands in the terminal, and as functions</p>
@@ -735,7 +794,7 @@ header<span class="w"> </span>/scratch/segmentation_dataset/TE3_tomo.mrc
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright &copy; 2022 - 2022 teamtomo
+      Copyright &copy; 2024 baradlab
     </div>
   
   

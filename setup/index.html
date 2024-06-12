@@ -77,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#finding-the-data" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -267,6 +272,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Setup Steps
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -276,6 +292,32 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#finding-the-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Finding the data
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -359,6 +401,23 @@
   
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#finding-the-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      Finding the data
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -377,7 +436,24 @@
 
   <h1>Setup Steps</h1>
 
-
+<p><strong>Grab your 3-button mice! Segmenting without one is the wooooooooorst!</strong></p>
+<p>Your setup should be quite quick, as everything should already be arranged. However, we need to activate dragonfly. To do so, run the following commands (the last one is just to launch dragonfly and make sure it comes up successfully)</p>
+<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>activate<span class="w"> </span>dragonfly
+bash<span class="w"> </span>~.bin/dragonfly-rsync.bash
+dragonfly
+</code></pre></div>
+<p>Make sure you are able to open the Deep Learning Toolbox within dragonfly. You don't need it now but sometimes it complains about "extra instances". Raise your hand and get my attention and I will try to help if you run into this!</p>
+<h2 id="finding-the-data">Finding the data</h2>
+<p>I have provided some fun data for everyone to play with. Instead of working with beautiful perfect data, we will be playing with some "typical" data for a relatively new user. I collected it during the first year of my postdoc and I am quite fond of it so please don't hate too hard. The reality is that better data quality will in turn make segmentations better, but you should not be afraid to try to analyze imperfect data!</p>
+<p>The data can be found at:
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/scratch/segmentation_dataset
+</code></pre></div></p>
+<p>Take a look around in here. Feel free to open stuff with 3dmod and get a sense of what is in the tomogram (maybe easier to see in the deconv version). We are going to:</p>
+<ol>
+<li>Use membrain-seg to segment the membranes in the tomogram.</li>
+<li>Use dragonfly to do some quick contrast enhancement and train it to segment the 3 classes of filaments.</li>
+<li>Use surface_morphometrics to generate some meshes and do some basic quantifications on the data.</li>
+</ol>
 
 
 
@@ -409,7 +485,7 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright &copy; 2022 - 2022 teamtomo
+      Copyright &copy; 2024 baradlab
     </div>
   
   

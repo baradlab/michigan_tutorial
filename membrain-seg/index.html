@@ -12,22 +12,28 @@
         <meta name="author" content="baradlab">
       
       
+        <link rel="canonical" href="https://baradlab.com/michigan_tutorial/membrain-seg/">
       
       
+        <link rel="prev" href="../setup/">
       
-      <link rel="icon" href="/michigan_tutorial/assets/images/favicon.png">
+      
+        <link rel="next" href="../dragonfly/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.26">
     
     
       
-        <title>baradlab/michigan_tutorial</title>
+        <title>Membrain-Seg Segmentation - baradlab/michigan_tutorial</title>
       
     
     
-      <link rel="stylesheet" href="/michigan_tutorial/assets/stylesheets/main.6543a935.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.6543a935.min.css">
       
         
-        <link rel="stylesheet" href="/michigan_tutorial/assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -46,7 +52,7 @@
       
     
     
-    <script>__md_scope=new URL("/michigan_tutorial/",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -83,7 +89,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="/michigan_tutorial/." title="baradlab/michigan_tutorial" class="md-header__button md-logo" aria-label="baradlab/michigan_tutorial" data-md-component="logo">
+    <a href=".." title="baradlab/michigan_tutorial" class="md-header__button md-logo" aria-label="baradlab/michigan_tutorial" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 16.5c0 .38-.21.71-.53.88l-7.9 4.44c-.16.12-.36.18-.57.18-.21 0-.41-.06-.57-.18l-7.9-4.44A.991.991 0 0 1 3 16.5v-9c0-.38.21-.71.53-.88l7.9-4.44c.16-.12.36-.18.57-.18.21 0 .41.06.57.18l7.9 4.44c.32.17.53.5.53.88v9M12 4.15 6.04 7.5 12 10.85l5.96-3.35L12 4.15M5 15.91l6 3.38v-6.71L5 9.21v6.7m14 0v-6.7l-6 3.37v6.71l6-3.38Z"/></svg>
@@ -103,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              
+              Membrain-Seg Segmentation
             
           </span>
         </div>
@@ -204,7 +210,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/michigan_tutorial/." title="baradlab/michigan_tutorial" class="md-nav__button md-logo" aria-label="baradlab/michigan_tutorial" data-md-component="logo">
+    <a href=".." title="baradlab/michigan_tutorial" class="md-nav__button md-logo" aria-label="baradlab/michigan_tutorial" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 16.5c0 .38-.21.71-.53.88l-7.9 4.44c-.16.12-.36.18-.57.18-.21 0-.41-.06-.57-.18l-7.9-4.44A.991.991 0 0 1 3 16.5v-9c0-.38.21-.71.53-.88l7.9-4.44c.16-.12.36-.18.57-.18.21 0 .41.06.57.18l7.9 4.44c.32.17.53.5.53.88v9M12 4.15 6.04 7.5 12 10.85l5.96-3.35L12 4.15M5 15.91l6 3.38v-6.71L5 9.21v6.7m14 0v-6.7l-6 3.37v6.71l6-3.38Z"/></svg>
@@ -234,7 +240,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/michigan_tutorial/." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -254,7 +260,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/michigan_tutorial/setup/" class="md-nav__link">
+      <a href="../setup/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -271,10 +277,17 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="/michigan_tutorial/membrain-seg/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -283,6 +296,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -294,7 +308,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/michigan_tutorial/dragonfly/" class="md-nav__link">
+      <a href="../dragonfly/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -314,7 +328,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/michigan_tutorial/morphometrics/" class="md-nav__link">
+      <a href="../morphometrics/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -355,8 +369,28 @@
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
                 
-  <h1>404 - Not found</h1>
+                  
 
+  
+  
+
+
+  <h1>Membrain-Seg Segmentation</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
               </article>
             </div>
           
@@ -396,10 +430,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "/michigan_tutorial/", "features": ["navigation.instant", "navigation.expand", "search.highlight", "search.suggest", "content.tabs.link"], "search": "/michigan_tutorial/assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.instant", "navigation.expand", "search.highlight", "search.suggest", "content.tabs.link"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="/michigan_tutorial/assets/javascripts/bundle.ad660dcc.min.js"></script>
+      <script src="../assets/javascripts/bundle.ad660dcc.min.js"></script>
       
     
   </body>

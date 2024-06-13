@@ -618,10 +618,12 @@ Dragonfly
 <h2 id="loading-the-data-and-the-membrain-segmentation">Loading the Data and the Membrain Segmentation</h2>
 <p>Next, we are going to load the data. File -&gt; Open -&gt; navigate to <code>/scratch/segmentation_dataset</code> and select the <code>TE3_tomo.mrc</code> file. This is a tomogram showing a mitochondrion with some filaments in it. You should have gotten membrane segmentations of this data from the previous tutorial. If you haven't, you can find a usable segmentation in <code>/scratch/segmentation_dataset/morpho_run/datadir</code>. Load that file with the same File -&gt; Open process.</p>
 <h2 id="calibrating-the-data">Calibrating the Data</h2>
-<p>Calibration puts all the data on a similar intensity scale. 
-1. Check on the mode and standard deviation of the intensities in the data. On the data panel on the right side of the screen, with the tomogram selected, click on the histogram button under tools.
-2. Note down the mode and standard deviation of the data. Calculate the mode - standard deviation.
-3. Right click on the dataset and select Calibrate Intensity Scale. Set the foreground label to the mode and the background label to the mode - standard deviation. This will put the data on a consistent intensity scale.</p>
+<p>Calibration puts all the data on a similar intensity scale. </p>
+<ol>
+<li>Check on the mode and standard deviation of the intensities in the data. On the data panel on the right side of the screen, with the tomogram selected, click on the histogram button under tools.</li>
+<li>Note down the mode and standard deviation of the data. Calculate the mode - standard deviation.</li>
+<li>Right click on the dataset and select Calibrate Intensity Scale. Set the foreground label to the mode and the background label to the mode - standard deviation. This will put the data on a consistent intensity scale.</li>
+</ol>
 <h2 id="preprocessing-the-image">Preprocessing the Image</h2>
 <ol>
 <li>Workflows -&gt; Image Filtering</li>

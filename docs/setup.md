@@ -4,8 +4,8 @@ Your setup should be quite quick, as everything should already be arranged. Howe
 
 ```bash
 conda activate dragonfly
-bash ~.bin/dragonfly-rsync.bash
-dragonfly
+bash ~/bin/dragonfly-register.bash
+Dragonfly
 ```
 
 Make sure you are able to open the Deep Learning Toolbox within dragonfly. You don't need it now but sometimes it complains about "extra instances". Raise your hand and get my attention and I will try to help if you run into this!

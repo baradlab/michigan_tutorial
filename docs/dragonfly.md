@@ -99,6 +99,7 @@ Optional: If the segmentation is bad, you can retrain the network with the new d
 
 ## Extracting Trained Data
 Once you have an inferred segmentation, you can extract the data as tifs then convert them to mrc. This is a bit of a pain, and ORS has a beta version of direct MRC export, so expect this to be much better in the future!
+
 1. Right click on the segmentation and select "Convert to Greyscale"
 2. Right click on the greyscale and select "Export" and select "TIF". Choose somewhere to save the data.
 3. Convert the stack of TIFs to MRC using IMOD.

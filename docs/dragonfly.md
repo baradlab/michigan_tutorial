@@ -15,6 +15,7 @@ We will pause here for everyone to get set up with Dragonfly. If you have any is
 Hopefully you all got Dragonfly licensed and opened earlier today. If you haven't, please do so now. If you have any issues, please let me know. 
 
 Within dragonfly, we want to make one settings change to make life easier:
+
 1. Go to File -> Preferences
 3. Change "Default Unit" to "nanometers" - most people do segmentations in nm scale, because that is what the volume EM community uses. The features we care about are usually 5+ nm in scale so this is a good default. All the software we are using will work fine in Angstrom scale, however.
 
@@ -49,6 +50,7 @@ Calibration puts all the data on a similar intensity scale.
 5. Click "Apply" to apply the filter.
 
 This is where you can try out the denoiser in addition to the other "standard" processing steps. Instead of or in addition to doing the above steps, you can filter with AI:
+
 1. Main -> Filter with AI
 2. Select the denoising model you loaded earlier.
 3. Click "Filter" to apply the filter.
@@ -84,10 +86,13 @@ This is where you can try out the denoiser in addition to the other "standard" p
 
 ## Evaluating the neural net and retraining
 Once the neural network is trained, you can apply it to the data and see how well it does. If it doesn't do well, you can continue to retrain it using the OTSU brush. At OHSU, we generally do 1 round of training with a pretrained network, then spend a bit of time repainting, then do a second round of training. This generally allows us to get a good to great segmentation with under an hour of human time.
+
 1. Segment Panel -> Segment with AI
 2. Select the neural network you just trained.
 3. Click "Segment" (or "Preview" if you only want to see one slice)
+
 Optional: If the segmentation is bad, you can retrain the network with the new data.
+
 4. Use the otsu brush to correct any mistakes. You can also use the "Fill" tool to move large areas to background if needed.
 5. Repeat the training process once the correction is done. You might want to use a new box/mask to cover a relatively small number of larger slices - maybe 1k by 1k by 32 so you just clean up part of the data then train.
 

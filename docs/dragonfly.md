@@ -11,6 +11,7 @@ Dragonfly
 We will pause here for everyone to get set up with Dragonfly. If you have any issues, please let one of us know! Sometimes Dragonfly stalls when you launch it - if this happens, open a new tab and try launching dragonfly again. That should unstall the first one and you can kill the second job once it does (with Ctrl-C). Yes, I also hear how crazy that sounds as a strategy.
 
 ## Setting up Dragonfly
+
 Hopefully you all got Dragonfly licensed and opened earlier today. If you haven't, please do so now. If you have any issues, please let me know. 
 
 Within dragonfly, we want to make one settings change to make life easier:
@@ -22,20 +23,25 @@ The software is a bit liable to crashing - to account for this, I'd recommend se
 I anticipate this will take a bit of time to get everyone set up for everyone (licensing in particular) so if you get through quickly, feel free to grab a coffee!
 
 ## Loading the Denoising Model
+
 The first thing we are going to do is load a denoising model. This is a neural network that has been trained to remove noise from tomography data. This is not at all a critical step in the process, but it can make the hand segmentation process a little easier. We made this denoising model using Matt Swulius's [CryoTomoSim](https://doi.org/10.1101/2023.04.28.538636) software to generate noise free and noisy simulated data with lots of membranes, filaments, and other bits and bobs. It is not quite as accurate as cryoCARE or isonet, but it is fast and easy.
 
 To load the denoising model, go to the "Deep Learning" tab, and click "Load Model". Navigate to `/scratch/segmentation_dataset` and select the whole `tutorial` folder. This will load the denoising model, but you won't actually run it through the denoising tool (you can, but we won't today).
 
 ## Loading the Data and the Membrain Segmentation
+
 Next, we are going to load the data. File -> Open -> navigate to `/scratch/segmentation_dataset` and select the `TE3_tomo.mrc` file. This is a tomogram showing a mitochondrion with some filaments in it. You should have gotten membrane segmentations of this data from the previous tutorial. If you haven't, you can find a usable segmentation in `/scratch/segmentation_dataset/morpho_run/datadir`. Load that file with the same File -> Open process.
 
 ## Calibrating the Data
+
 Calibration puts all the data on a similar intensity scale. 
+
 1. Check on the mode and standard deviation of the intensities in the data. On the data panel on the right side of the screen, with the tomogram selected, click on the histogram button under tools.
 2. Note down the mode and standard deviation of the data. Calculate the mode - standard deviation.
 3. Right click on the dataset and select Calibrate Intensity Scale. Set the foreground label to the mode and the background label to the mode - standard deviation. This will put the data on a consistent intensity scale.
 
 ## Preprocessing the Image
+
 1. Workflows -> Image Filtering
 2. Select "Histogram Equalization". Deselect the output.
 3. Click add and then select "Gaussian". Deselect the output.
@@ -48,6 +54,7 @@ This is where you can try out the denoiser in addition to the other "standard" p
 3. Click "Filter" to apply the filter.
 
 ## Preparing to train the Neural Network
+
 1. Convert the membrane segmentation to a multi-ROI by right-clicking on the segmentation and selecting "Extract ROIs". 
 2. Delete the background ROI by clicking and trashing.
 3. Select the other ROI and right-click to "Create Multi-ROI from ROI". This will create a multi-ROI with the membrane pre-segmented.
@@ -60,6 +67,7 @@ This is where you can try out the denoiser in addition to the other "standard" p
 9. Once you are done, right click on the box and select "Add to ROI", "New ROI", name it "Mask".
 
 ## Training a new neural network
+
 1. AI -> Deep Learning Tool
 2. New Model
 3. "U-Net", "Semantic Segmentation", 6 classes (or 5 if you skipped ribosomes), 2.5D, 3 or 5 layers. More layers helps a lot but takes longer to train. 

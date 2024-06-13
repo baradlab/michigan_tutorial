@@ -607,9 +607,11 @@ Dragonfly
 <p>We will pause here for everyone to get set up with Dragonfly. If you have any issues, please let one of us know! Sometimes Dragonfly stalls when you launch it - if this happens, open a new tab and try launching dragonfly again. That should unstall the first one and you can kill the second job once it does (with Ctrl-C). Yes, I also hear how crazy that sounds as a strategy.</p>
 <h2 id="setting-up-dragonfly">Setting up Dragonfly</h2>
 <p>Hopefully you all got Dragonfly licensed and opened earlier today. If you haven't, please do so now. If you have any issues, please let me know. </p>
-<p>Within dragonfly, we want to make one settings change to make life easier:
-1. Go to File -&gt; Preferences
-3. Change "Default Unit" to "nanometers" - most people do segmentations in nm scale, because that is what the volume EM community uses. The features we care about are usually 5+ nm in scale so this is a good default. All the software we are using will work fine in Angstrom scale, however.</p>
+<p>Within dragonfly, we want to make one settings change to make life easier:</p>
+<ol>
+<li>Go to File -&gt; Preferences</li>
+<li>Change "Default Unit" to "nanometers" - most people do segmentations in nm scale, because that is what the volume EM community uses. The features we care about are usually 5+ nm in scale so this is a good default. All the software we are using will work fine in Angstrom scale, however.</li>
+</ol>
 <p>The software is a bit liable to crashing - to account for this, I'd recommend setting up autosave in File -&gt; Preferences -&gt; Autosave. I'd recommend saving every 5 minutes, and keeping 3 backups. This will save you a lot of headache if the software crashes.</p>
 <p>I anticipate this will take a bit of time to get everyone set up for everyone (licensing in particular) so if you get through quickly, feel free to grab a coffee!</p>
 <h2 id="loading-the-denoising-model">Loading the Denoising Model</h2>
@@ -632,10 +634,12 @@ Dragonfly
 <li>Click add and then select "Unsharp". Leave the output.</li>
 <li>Click "Apply" to apply the filter.</li>
 </ol>
-<p>This is where you can try out the denoiser in addition to the other "standard" processing steps. Instead of or in addition to doing the above steps, you can filter with AI:
-1. Main -&gt; Filter with AI
-2. Select the denoising model you loaded earlier.
-3. Click "Filter" to apply the filter.</p>
+<p>This is where you can try out the denoiser in addition to the other "standard" processing steps. Instead of or in addition to doing the above steps, you can filter with AI:</p>
+<ol>
+<li>Main -&gt; Filter with AI</li>
+<li>Select the denoising model you loaded earlier.</li>
+<li>Click "Filter" to apply the filter.</li>
+</ol>
 <h2 id="preparing-to-train-the-neural-network">Preparing to train the Neural Network</h2>
 <ol>
 <li>Convert the membrane segmentation to a multi-ROI by right-clicking on the segmentation and selecting "Extract ROIs". </li>
@@ -667,13 +671,17 @@ Dragonfly
 </ol>
 <p><strong>Coffee break!!!</strong></p>
 <h2 id="evaluating-the-neural-net-and-retraining">Evaluating the neural net and retraining</h2>
-<p>Once the neural network is trained, you can apply it to the data and see how well it does. If it doesn't do well, you can continue to retrain it using the OTSU brush. At OHSU, we generally do 1 round of training with a pretrained network, then spend a bit of time repainting, then do a second round of training. This generally allows us to get a good to great segmentation with under an hour of human time.
-1. Segment Panel -&gt; Segment with AI
-2. Select the neural network you just trained.
-3. Click "Segment" (or "Preview" if you only want to see one slice)
-Optional: If the segmentation is bad, you can retrain the network with the new data.
-4. Use the otsu brush to correct any mistakes. You can also use the "Fill" tool to move large areas to background if needed.
-5. Repeat the training process once the correction is done. You might want to use a new box/mask to cover a relatively small number of larger slices - maybe 1k by 1k by 32 so you just clean up part of the data then train.</p>
+<p>Once the neural network is trained, you can apply it to the data and see how well it does. If it doesn't do well, you can continue to retrain it using the OTSU brush. At OHSU, we generally do 1 round of training with a pretrained network, then spend a bit of time repainting, then do a second round of training. This generally allows us to get a good to great segmentation with under an hour of human time.</p>
+<ol>
+<li>Segment Panel -&gt; Segment with AI</li>
+<li>Select the neural network you just trained.</li>
+<li>Click "Segment" (or "Preview" if you only want to see one slice)</li>
+</ol>
+<p>Optional: If the segmentation is bad, you can retrain the network with the new data.</p>
+<ol>
+<li>Use the otsu brush to correct any mistakes. You can also use the "Fill" tool to move large areas to background if needed.</li>
+<li>Repeat the training process once the correction is done. You might want to use a new box/mask to cover a relatively small number of larger slices - maybe 1k by 1k by 32 so you just clean up part of the data then train.</li>
+</ol>
 <h2 id="extracting-trained-data">Extracting Trained Data</h2>
 <p>Once you have an inferred segmentation, you can extract the data as tifs then convert them to mrc. This is a bit of a pain, and ORS has a beta version of direct MRC export, so expect this to be much better in the future!
 1. Right click on the segmentation and select "Convert to Greyscale"

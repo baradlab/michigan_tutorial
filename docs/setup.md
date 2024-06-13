@@ -3,7 +3,7 @@
 Your setup should be quite quick, as everything should already be arranged. However, we need to activate dragonfly. To do so, run the following commands (the last one is just to launch dragonfly and make sure it comes up successfully)
 
 ```bash
-conda activate dragonfly
+module load dragonfly
 bash ~/bin/dragonfly-register.bash
 Dragonfly
 ```

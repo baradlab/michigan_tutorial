@@ -683,15 +683,17 @@ Dragonfly
 <li>Repeat the training process once the correction is done. You might want to use a new box/mask to cover a relatively small number of larger slices - maybe 1k by 1k by 32 so you just clean up part of the data then train.</li>
 </ol>
 <h2 id="extracting-trained-data">Extracting Trained Data</h2>
-<p>Once you have an inferred segmentation, you can extract the data as tifs then convert them to mrc. This is a bit of a pain, and ORS has a beta version of direct MRC export, so expect this to be much better in the future!
-1. Right click on the segmentation and select "Convert to Greyscale"
-2. Right click on the greyscale and select "Export" and select "TIF". Choose somewhere to save the data.
-3. Convert the stack of TIFs to MRC using IMOD.
+<p>Once you have an inferred segmentation, you can extract the data as tifs then convert them to mrc. This is a bit of a pain, and ORS has a beta version of direct MRC export, so expect this to be much better in the future!</p>
+<ol>
+<li>Right click on the segmentation and select "Convert to Greyscale"</li>
+<li>Right click on the greyscale and select "Export" and select "TIF". Choose somewhere to save the data.</li>
+<li>Convert the stack of TIFs to MRC using IMOD.
 <div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>imod
 <span class="nb">cd</span><span class="w"> </span>&lt;wherever<span class="w"> </span>you<span class="w"> </span>saved<span class="w"> </span>the<span class="w"> </span>tif<span class="w"> </span>files&gt;
 tif2mrc<span class="w"> </span>*.tif<span class="w"> </span>TE3_dragonfly_labels.mrc
 3dmod<span class="w"> </span>TE3_dragonfly_labels.mrc
-</code></pre></div></p>
+</code></pre></div></li>
+</ol>
 
 
 

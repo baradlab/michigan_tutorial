@@ -1,20 +1,23 @@
-site_name: baradlab/michigan_tutorial
+site_name: CryoET Segmentation & Modeling Tutorial
 site_url: https://baradlab.com/michigan_tutorial
 site_author: baradlab
 site_description: >-
-  Segmentation and modeling tutorial for U Michigan
+  Segmentation and modeling tutorial for the U Michigan CryoET Workshop (2026 edition)
 repo_name: baradlab/michigan_tutorial
 repo_url: https://github.com/baradlab/michigan_tutorial
 edit_uri: edit/main/docs/
-copyright: Copyright &copy; 2024 baradlab
+copyright: Copyright &copy; 2026 baradlab
 
 
 # Custom navigation can be specified
 nav:
   - Overview: index.md
   - Setup Steps: setup.md
-  - Membrain-Seg Segmentation: membrain-seg.md
-  - Dragonfly Segmentation: dragonfly.md
+  - Segmentation:
+    - MemBrain: membrain.md
+    - Mosaic: mosaic.md
+    - EasyMode: easymode.md
+    - TARDIS: tardis.md
   - Surface Morphometrics: morphometrics.md
 
 theme:
@@ -30,10 +33,12 @@ theme:
 
   features:
     - navigation.instant
+    - navigation.sections
     - navigation.expand
     - search.highlight
     - search.suggest
     - content.tabs.link
+    - content.code.copy
 
 markdown_extensions:
   - admonition
@@ -43,14 +48,17 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true
   - attr_list
-  - pymdownx.superfences
   - pymdownx.highlight
   - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - md_in_html
   - pymdownx.arithmatex:
       generic: true
 
 plugins:
   - search
+
+extra:
+  version:
+    provider: mike

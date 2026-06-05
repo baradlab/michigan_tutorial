@@ -5,33 +5,38 @@ on:
     branches:
       - main
 
-# This job installs dependencies, builds the book, and pushes it to
-# the `gh-pages` branch of the same repository.
+# Deploys the current (2026) edition as the `2026` version with the `latest`
+# alias, using mike, onto the gh-pages branch. The archived `2024` version is
+# deployed once from the `archive/2024` branch (see README) and is left
+# untouched by this workflow.
+permissions:
+  contents: write
+
 jobs:
   deploy-book:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          # mike needs full history to update the gh-pages branch
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "3.11"
 
       - name: Install dependencies
         run: |
-          # pip install -e .
-          pip install mkdocs mkdocs-material mkdocstrings[python]
+          pip install mkdocs-material mike
 
-      # Build the book
-      - name: Build the book
+      - name: Configure git for mike
         run: |
-          mkdocs build
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      # Push the site to github-pages
-      - name: GitHub Pages action
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          publish_dir: ./site
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy current edition with mike
+        run: |
+          git fetch origin gh-pages --depth=1 || true
+          mike deploy --push --update-aliases 2026 latest

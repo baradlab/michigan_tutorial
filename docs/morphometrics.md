@@ -1,22 +1,33 @@
 # Surface Morphometrics
 
 ![Workflow Figure](https://raw.githubusercontent.com/GrotjahnLab/surface_morphometrics/master/Workflow_title.png)
-### Quantification of Membrane Surfaces Segmented from Cryo-ET or other volumetric imaging.  
+
+### Quantification of Membrane Surfaces Segmented from Cryo-ET or other volumetric imaging.
 Surface morphometrics is a toolbox I developed during my postdoc to better understand how mitochondrial membranes remodel during stress. It turns out to be useful for a whole lot more than mitochondria! You can use it to assess aspects of membrane geometry in detail both locally and globally within cells, thanks to a robust meshing (modeling) algorithm and a set of simple tools for making measurements on the resulting surfaces.
 
 Today we will scratch the surface with a single tomogram, but one of the most valuable aspects of building models and making quantifications is that it becomes possible to assess statistical significance by comparing quantifications across many tomograms in different cells and conditions. This is a powerful way to move from qualitative phenomenology about cellular remodeling to robust quantitative understanding of the underlying biology. With one tomogram, we're mostly still doing phenomenology.
 
+!!! tip "Newer helper tools (2026)"
+    The core pipeline below is unchanged and battle-tested, but my lab now leans on a couple of small companion packages that make the segmentation-wrangling steps cleaner:
 
-## Setup:
-1. Activate your conda environment and move to the morpho_run folder: 
+    * [`ETSegTools`](https://github.com/bbarad/ETSegTools) — tools for manipulating multilabel cryo-ET segmentations (relabeling, splitting, combining classes) before meshing. Handy for getting the right `segmentation_values` per class.
+    * [`qvox`](https://github.com/teamtomo/qvox) — fast operations on quantized (integer) voxel arrays.
+
+    Combined with [Mosaic](mosaic.md) for interactive cleanup, these replace the Dragonfly/Amira component-separation step from the 2024 edition.
+
+!!! note "Confirm before the workshop — TODO"
+    Confirm this year's env name and dataset paths, and decide which segmentation we feed in (MemBrain + Mosaic output vs. a precalculated label file). Update the `module load` / `conda activate` lines below to match the workshop machines.
+
+## Setup
+1. Activate your conda environment and move to the morpho_run folder:
 ```bash
-conda activate morphometrics
-cd /scratch/segmentation_dataset/morpho_run
+conda activate morphometrics                       # TODO: confirm env name
+cd /scratch/segmentation_dataset/morpho_run        # TODO: confirm path
 ```
-2. Edit the `config.yml` file for our project's needs. I prefer visual studio code for this!
+2. Edit the `config.yml` file for our project's needs. I prefer Visual Studio Code for this!
     * Set the `data_folder` to the folder containing your label file (`/scratch/segmentation_dataset/morpho_run/datadir`)
     * Set the `output_folder` to the folder where you want the output files to be saved (`/scratch/segmentation_dataset/morpho_run/workdir`)
-    * For `segmentation_values`, use `-127` for the OMM and `-126` for the IMM.
+    * For `segmentation_values`, use `-127` for the OMM and `-126` for the IMM. (If you're using your own Mosaic output, set these to match your class labels — `ETSegTools` can help you check/relabel them.)
     * Set the `max_triangles` to 50,000 to speed up computation - this will reduce the quality of the final surfaces so don't do this when you are running at home!
     * Set the `num_cores` to 16.
     * Set the `radius_hit` to 10.
@@ -27,9 +38,9 @@ cd /scratch/segmentation_dataset/morpho_run
 
 ## Example data
 
-There is example data and a config available in the `morpho_run` folder. This is TE3_labels.mrc, which is the same tomogram you will be processing in the rest of the tutorial. You should check some details about it! You can also compare it to the tomogram itself.
+There is example data and a config available in the `morpho_run` folder. This is `TE3_labels.mrc`, the same tomogram you'll be processing in the rest of the tutorial. You should check some details about it! You can also compare it to the tomogram itself.
 ```bash
-module load imod
+module load imod                                   # TODO: confirm
 header /scratch/segmentation_dataset/morpho_run/datadir/TE3_labels.mrc
 header /scratch/segmentation_dataset/TE3_tomo.mrc
 3dmod /scratch/segmentation_dataset/morpho_run/datadir/TE3_labels.mrc
@@ -38,9 +49,9 @@ header /scratch/segmentation_dataset/TE3_tomo.mrc
 
 ## Processing your data
 ### Interactive mesh generation
-We are going to do semi-interactive mesh generation in meshlab to teach you how the sausage is made, but there is also a fully configurable pipeline (`python ../surface_morphometrics/segmentation_to_meshes.py config.yml`) that will do the whole thing for you.
+We are going to do semi-interactive mesh generation in Meshlab to teach you how the sausage is made, but there is also a fully configurable pipeline (`python ../surface_morphometrics/segmentation_to_meshes.py config.yml`) that will do the whole thing for you.
 
-1. Prepare the xyz point cloud files to make new meshes: 
+1. Prepare the xyz point cloud files to make new meshes:
 ```bash
 cd /scratch/segmentation_dataset/morpho_run
 python ../surface_morphometrics/mrc2xyz.py -l -127 datadir/TE3_labels.mrc workdir/TE3_OMM.xyz
@@ -48,7 +59,7 @@ python ../surface_morphometrics/mrc2xyz.py -l -126 datadir/TE3_labels.mrc workdi
 ```
 2. Launch `Meshlab`
 ```bash
-module load meshlab
+module load meshlab                                # TODO: confirm
 meshlab
 ```
 3. For each mesh file:
@@ -57,30 +68,30 @@ meshlab
     3. Filters->Selection->Select Faces by Vertex Quality
     4. Filters->Selection->Delete Selected Faces
     5. Filters->Remeshing, Simplification, and Reconstruction->Quadric Edge Collapse Decimation
-    5. File->Export Mesh As...->TE3_OMM.ply
+    6. File->Export Mesh As...->TE3_OMM.ply
 
 ### Pipelined Processing Steps
-0. If you wanted to make the meshes automatically: `python ../surface_morphometrics/segmentation_to_meshes.py config.yml`. We aren't doing this today because I think its more fun to do by hand. If you have 30 tomograms each with 3-5 labels, it will no longer be fun.
+0. If you wanted to make the meshes automatically: `python ../surface_morphometrics/segmentation_to_meshes.py config.yml`. We aren't doing this today because I think it's more fun to do by hand. If you have 30 tomograms each with 3-5 labels, it will no longer be fun.
 1. Convert the ply files to vtp files: `python ../surface_morphometrics/ply2vtp.py config.yml TE3_OMM.ply TE3_OMM.surface.vtp`. Do this again for IMM.
-2. Run pycurv for each surface (normally, this is best run in parallel on a cluster): 
+2. Run pycurv for each surface (normally, this is best run in parallel on a cluster):
     `python ../surface_morphometrics/run_pycurv.py config.yml TE3_OMM.surface.vtp`. Do this again for IMM (it will take a long time for IMM!)
-    You may see warnings aobut the curvature, this is normal and you do not need to worry.
+    You may see warnings about the curvature, this is normal and you do not need to worry.
     We may run into memory constraints - if you do, you can reduce the number of triangles in the surface by setting `max_triangles` to a lower number in the config file. This will reduce the quality of the final surfaces, but will make the computation faster and lower-memory.
 3. Measure intra- and inter-surface distances and orientations (also best to run this one in parallel for each original segmentation): `python ../surface_morphometrics/measure_distances_orientations.py config.yml`
-4. Don't do this today: Combine the results of the pycurv analysis into aggregate Experiments and generate statistics and plots. This requires some manual coding using the Experiment class and its associated methods in the `morphometrics_stats.py`. Everything is roughly organized around working with the CSVs in pandas dataframes. Running  `morphometrics_stats.py` as a script with the config file and a filename will output a pickle file with an assembled "experiment" object for all the tomos in the data folder. Reusing a pickle file will make your life way easier if you have dozens of tomograms to work with, but it doesn't save too much time with just the example data...
+4. Don't do this today: Combine the results of the pycurv analysis into aggregate Experiments and generate statistics and plots. This requires some manual coding using the Experiment class and its associated methods in `morphometrics_stats.py`. Everything is roughly organized around working with the CSVs in pandas dataframes. Running `morphometrics_stats.py` as a script with the config file and a filename will output a pickle file with an assembled "experiment" object for all the tomos in the data folder. Reusing a pickle file will make your life way easier if you have dozens of tomograms to work with, but it doesn't save too much time with just the example data...
 
 Just in case you have problems running things fast (I don't have a great sense of how long this will take on these machines), I have provided usable output files for the downstream analysis you might want to check out. You can find them in the `morpho_run/workdir` folder.
 
 
-## Inspecting Results 
+## Inspecting Results
 ### Visualizing the surfaces
-1. Load the surfaces in Paraview: 
+1. Load the surfaces in Paraview:
     * Open Paraview
     * File -> Open -> TE3_OMM.surface.vtp
     * File -> Open -> TE3_IMM.surface.vtp
     * Make each visible
     * Color by `curvedness_vv` to see the curvature of the surface
-    * Color by `OMM_dist` (or `IMM_dist`) to see the distance from the IMM to the OMM or visa-versa
+    * Color by `OMM_dist` (or `IMM_dist`) to see the distance from the IMM to the OMM or vice-versa
 2. Adjust color scales to see the features you are interested in. Add and edit the scalebar.
 3. Adjust the background, turn on ambient occlusion, and make the surfaces look nice for a screenshot.
 4. Take some nice pictures!
@@ -92,7 +103,7 @@ Just in case you have problems running things fast (I don't have a great sense o
 
 
 ## Running individual steps without pipelining
-Individual steps are available as click commands in the terminal, and as functions
+Individual steps are available as click commands in the terminal, and as functions:
 
 1. Robust Mesh Generation
     1. `mrc2xyz.py` to prepare point clouds from voxel segmentation
@@ -102,18 +113,17 @@ Individual steps are available as click commands in the terminal, and as functio
     1. `curvature.py` to run pycurv in an organized way on pregenerated surfaces
     2. `intradistance_verticality.py` to generate distance metrics and verticality measurements within a surface.
     3. `interdistance_orientation.py` to generate distance metrics and orientation measurements between surfaces.
-    4. Outputs: gt graphs for further analysis, vtp files for paraview visualization, and CSV files for         pandas-based plotting and statistics
+    4. Outputs: gt graphs for further analysis, vtp files for paraview visualization, and CSV files for pandas-based plotting and statistics
 3. Morphometric Quantification - there is no click function for this, as the questions answered depend on the biological system of interest!
     1. `morphometrics_stats.py` is a set of classes and functions to generate graphs and statistics with pandas.
     2. [Paraview](https://www.paraview.org/) for 3D surface mapping of quantifications.
 
 ## Summary of File Types:
-* Files with.xyz extension are point clouds converted, in nm or angstrom scale. This is a flat text file with `X Y Z` coordinates in each line.
-* Files with .ply extension are the surface meshes (in a binary format), which will be scaled in nm or angstrom scale, and work in many different softwares, including [Meshlab](https://www.meshlab.net/). 
-* Files with surface.vtp extension are the same surface meshes in the [VTK](https://vtk.org/) format.
-        * The .surface.vtp files are a less cross-compatible format, so you can't use them with as many types of software, but they are able to store all the fun quantifications you'll do!. [Paraview](https://www.paraview.org/) or [pyvista](https://docs.pyvista.org/) can load this format. This is the format pycurv reads to build graphs.
-* Files with .gt extension are triangle graph files using the `graph-tool` python toolkit. These graphs enable rapid neighbor-wise operations such as tensor voting, but are not especially useful for manual inspection.
-* Files with .csv extension are quantification outputs per-triangle. These are the files you'll use to generate statistics and plots.
-* Files with .log extension are log files, mostly from the output of the pycurv run.
-* Quantifications (plots and statistical tests) are output in csv, svg, and png formats. 
-
+* Files with `.xyz` extension are point clouds converted, in nm or angstrom scale. This is a flat text file with `X Y Z` coordinates in each line.
+* Files with `.ply` extension are the surface meshes (in a binary format), which will be scaled in nm or angstrom scale, and work in many different softwares, including [Meshlab](https://www.meshlab.net/).
+* Files with `surface.vtp` extension are the same surface meshes in the [VTK](https://vtk.org/) format.
+    * The `.surface.vtp` files are a less cross-compatible format, so you can't use them with as many types of software, but they are able to store all the fun quantifications you'll do! [Paraview](https://www.paraview.org/) or [pyvista](https://docs.pyvista.org/) can load this format. This is the format pycurv reads to build graphs.
+* Files with `.gt` extension are triangle graph files using the `graph-tool` python toolkit. These graphs enable rapid neighbor-wise operations such as tensor voting, but are not especially useful for manual inspection.
+* Files with `.csv` extension are quantification outputs per-triangle. These are the files you'll use to generate statistics and plots.
+* Files with `.log` extension are log files, mostly from the output of the pycurv run.
+* Quantifications (plots and statistical tests) are output in csv, svg, and png formats.

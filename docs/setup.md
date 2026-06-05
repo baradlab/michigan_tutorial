@@ -1,26 +1,65 @@
+# Setup
+
 **Grab your 3-button mice! Segmenting without one is the wooooooooorst!**
 
-Your setup should be quite quick, as everything should already be arranged. However, we need to activate dragonfly. To do so, run the following commands (the last one is just to launch dragonfly and make sure it comes up successfully)
+Most of the heavy setup has already been arranged on the workshop machines. This page gets you logged in, points you at the data, and makes sure each of today's tools launches before we dive in.
+
+!!! note "Workshop machine specifics — TODO before the workshop"
+    Fill in the exact login / scheduler / module details for this year's machines:
+
+    * How to connect (ssh host, NoMachine/X2Go, web portal, …)
+    * How environments are provided (`module load …`, `conda activate …`, or `micromamba run -n …`)
+    * The path to the shared dataset
+    * Anything that needs licensing/registration this year
+
+## Getting connected
 
 ```bash
-module load dragonfly
-bash ~/bin/dragonfly-register.bash
-Dragonfly
+# TODO: connection command for this year's machines
+# e.g. ssh user@workshop-host
 ```
-
-Make sure you are able to open the Deep Learning Toolbox within dragonfly. You don't need it now but sometimes it complains about "extra instances". Raise your hand and get my attention and I will try to help if you run into this!
 
 ## Finding the data
-I have provided some fun data for everyone to play with. Instead of working with beautiful perfect data, we will be playing with some "typical" data for a relatively new user. I collected it during the first year of my postdoc and I am quite fond of it so please don't hate too hard. The reality is that better data quality will in turn make segmentations better, but you should not be afraid to try to analyze imperfect data!
 
-The data can be found at:
+I have provided some fun data for everyone to play with. Instead of working with beautiful perfect data, we will be playing with some "typical" data for a relatively new user. The reality is that better data quality will in turn make segmentations better, but you should not be afraid to try to analyze imperfect data!
+
 ```bash
-cd /scratch/segmentation_dataset
+cd /scratch/segmentation_dataset   # TODO: confirm this year's path
 ```
 
-Take a look around in here. Feel free to open stuff with 3dmod and get a sense of what is in the tomogram (maybe easier to see in the deconv version). We are going to:
+Take a look around in here. Feel free to open the tomogram with `3dmod` and get a sense of what is inside (the deconvolved/denoised version is often easier to read).
 
-1. Use membrain-seg to segment the membranes in the tomogram.
-2. Use dragonfly to do some quick contrast enhancement and train it to segment the 3 classes of filaments.
-3. Use surface_morphometrics to generate some meshes and do some basic quantifications on the data.
+```bash
+module load imod   # TODO: confirm
+3dmod /scratch/segmentation_dataset/<tomogram>.mrc
+```
 
+## What we're going to do today
+
+1. Use **[MemBrain](membrain.md)** to segment the membranes in the tomogram with a pretrained model.
+2. Use **[Mosaic](mosaic.md)** to clean up and organize the membrane segmentation into semantic components and prepare surfaces.
+3. Use **[EasyMode](easymode.md)** to get a general multi-class segmentation of cellular content with no per-dataset training.
+4. Use **[TARDIS](tardis.md)** to instance-segment filaments (and membranes) in the tomogram.
+5. Use **[Surface Morphometrics](morphometrics.md)** to generate meshes and run some basic quantifications on the data.
+
+## Sanity-check that each tool launches
+
+Raise your hand and get my attention if any of these don't come up cleanly — better to sort it out now than mid-exercise!
+
+```bash
+# MemBrain
+conda activate membrain-seg      # TODO: confirm env name
+membrain --help
+
+# napari (used by Mosaic and TARDIS)
+napari
+
+# EasyMode
+# TODO: confirm activation + entrypoint
+
+# TARDIS
+# TODO: confirm activation + entrypoint (napari plugin and/or CLI)
+
+# Surface morphometrics
+conda activate morphometrics     # TODO: confirm env name
+```

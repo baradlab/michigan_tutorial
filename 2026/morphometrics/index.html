@@ -1,0 +1,1059 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Segmentation and modeling tutorial for the U Michigan CryoET Workshop (2026 edition)">
+      
+      
+        <meta name="author" content="baradlab">
+      
+      
+        <link rel="canonical" href="https://baradlab.com/michigan_tutorial/2026/morphometrics/">
+      
+      
+        <link rel="prev" href="../tardis/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Surface Morphometrics - CryoET Segmentation & Modeling Tutorial</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#surface-morphometrics" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="CryoET Segmentation &amp; Modeling Tutorial" class="md-header__button md-logo" aria-label="CryoET Segmentation & Modeling Tutorial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 16.5c0 .38-.21.71-.53.88l-7.9 4.44c-.16.12-.36.18-.57.18s-.41-.06-.57-.18l-7.9-4.44A.99.99 0 0 1 3 16.5v-9c0-.38.21-.71.53-.88l7.9-4.44c.16-.12.36-.18.57-.18s.41.06.57.18l7.9 4.44c.32.17.53.5.53.88zM12 4.15 6.04 7.5 12 10.85l5.96-3.35zM5 15.91l6 3.38v-6.71L5 9.21zm14 0v-6.7l-6 3.37v6.71z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CryoET Segmentation & Modeling Tutorial
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Surface Morphometrics
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: slate)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="blue"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/baradlab/michigan_tutorial" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    baradlab/michigan_tutorial
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="CryoET Segmentation &amp; Modeling Tutorial" class="md-nav__button md-logo" aria-label="CryoET Segmentation & Modeling Tutorial" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 16.5c0 .38-.21.71-.53.88l-7.9 4.44c-.16.12-.36.18-.57.18s-.41-.06-.57-.18l-7.9-4.44A.99.99 0 0 1 3 16.5v-9c0-.38.21-.71.53-.88l7.9-4.44c.16-.12.36-.18.57-.18s.41.06.57.18l7.9 4.44c.32.17.53.5.53.88zM12 4.15 6.04 7.5 12 10.85l5.96-3.35zM5 15.91l6 3.38v-6.71L5 9.21zm14 0v-6.7l-6 3.37v6.71z"/></svg>
+
+    </a>
+    CryoET Segmentation & Modeling Tutorial
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/baradlab/michigan_tutorial" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    baradlab/michigan_tutorial
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup Steps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Segmentation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Segmentation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../membrain/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MemBrain
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mosaic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mosaic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../easymode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    EasyMode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tardis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TARDIS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Surface Morphometrics
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Surface Morphometrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quantification-of-membrane-surfaces-segmented-from-cryo-et-or-other-volumetric-imaging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quantification of Membrane Surfaces Segmented from Cryo-ET or other volumetric imaging.
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#processing-your-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing your data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Processing your data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interactive-mesh-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interactive mesh generation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pipelined-processing-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pipelined Processing Steps
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inspecting-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspecting Results
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inspecting Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#visualizing-the-surfaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visualizing the surfaces
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generating-some-basic-statistics-and-plots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generating some basic statistics and plots
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-individual-steps-without-pipelining" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running individual steps without pipelining
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-of-file-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary of File Types:
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quantification-of-membrane-surfaces-segmented-from-cryo-et-or-other-volumetric-imaging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quantification of Membrane Surfaces Segmented from Cryo-ET or other volumetric imaging.
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#processing-your-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Processing your data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Processing your data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#interactive-mesh-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interactive mesh generation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pipelined-processing-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pipelined Processing Steps
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inspecting-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspecting Results
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inspecting Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#visualizing-the-surfaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visualizing the surfaces
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generating-some-basic-statistics-and-plots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generating some basic statistics and plots
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-individual-steps-without-pipelining" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running individual steps without pipelining
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-of-file-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary of File Types:
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="surface-morphometrics">Surface Morphometrics</h1>
+<p><img alt="Workflow Figure" src="https://raw.githubusercontent.com/GrotjahnLab/surface_morphometrics/master/Workflow_title.png" /></p>
+<h3 id="quantification-of-membrane-surfaces-segmented-from-cryo-et-or-other-volumetric-imaging">Quantification of Membrane Surfaces Segmented from Cryo-ET or other volumetric imaging.</h3>
+<p>Surface morphometrics is a toolbox I developed during my postdoc to better understand how mitochondrial membranes remodel during stress. It turns out to be useful for a whole lot more than mitochondria! You can use it to assess aspects of membrane geometry in detail both locally and globally within cells, thanks to a robust meshing (modeling) algorithm and a set of simple tools for making measurements on the resulting surfaces.</p>
+<p>Today we will scratch the surface with a single tomogram, but one of the most valuable aspects of building models and making quantifications is that it becomes possible to assess statistical significance by comparing quantifications across many tomograms in different cells and conditions. This is a powerful way to move from qualitative phenomenology about cellular remodeling to robust quantitative understanding of the underlying biology. With one tomogram, we're mostly still doing phenomenology.</p>
+<div class="admonition tip">
+<p class="admonition-title">Newer helper tools (2026)</p>
+<p>The core pipeline below is unchanged and battle-tested, but my lab now leans on a couple of small companion packages that make the segmentation-wrangling steps cleaner:</p>
+<ul>
+<li><a href="https://github.com/bbarad/ETSegTools"><code>ETSegTools</code></a> — tools for manipulating multilabel cryo-ET segmentations (relabeling, splitting, combining classes) before meshing. Handy for getting the right <code>segmentation_values</code> per class.</li>
+<li><a href="https://github.com/teamtomo/qvox"><code>qvox</code></a> — fast operations on quantized (integer) voxel arrays.</li>
+</ul>
+<p>Combined with <a href="../mosaic/">Mosaic</a> for interactive cleanup, these replace the Dragonfly/Amira component-separation step from the 2024 edition.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Confirm before the workshop — TODO</p>
+<p>Confirm this year's env name and dataset paths, and decide which segmentation we feed in (MemBrain + Mosaic output vs. a precalculated label file). Update the <code>module load</code> / <code>conda activate</code> lines below to match the workshop machines.</p>
+</div>
+<h2 id="setup">Setup</h2>
+<ol>
+<li>Activate your conda environment and move to the morpho_run folder:
+<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>activate<span class="w"> </span>morphometrics<span class="w">                       </span><span class="c1"># TODO: confirm env name</span>
+<span class="nb">cd</span><span class="w"> </span>/scratch/segmentation_dataset/morpho_run<span class="w">        </span><span class="c1"># TODO: confirm path</span>
+</code></pre></div></li>
+<li>Edit the <code>config.yml</code> file for our project's needs. I prefer Visual Studio Code for this!<ul>
+<li>Set the <code>data_folder</code> to the folder containing your label file (<code>/scratch/segmentation_dataset/morpho_run/datadir</code>)</li>
+<li>Set the <code>output_folder</code> to the folder where you want the output files to be saved (<code>/scratch/segmentation_dataset/morpho_run/workdir</code>)</li>
+<li>For <code>segmentation_values</code>, use <code>-127</code> for the OMM and <code>-126</code> for the IMM. (If you're using your own Mosaic output, set these to match your class labels — <code>ETSegTools</code> can help you check/relabel them.)</li>
+<li>Set the <code>max_triangles</code> to 50,000 to speed up computation - this will reduce the quality of the final surfaces so don't do this when you are running at home!</li>
+<li>Set the <code>num_cores</code> to 16.</li>
+<li>Set the <code>radius_hit</code> to 10.</li>
+<li>Set <code>exclude_borders</code> to 1.</li>
+<li>For <code>intra</code>, provide <code>IMM</code> and <code>OMM</code></li>
+<li>For <code>inter</code>, provide <code>IMM</code>: <code>OMM</code></li>
+</ul>
+</li>
+</ol>
+<h2 id="example-data">Example data</h2>
+<p>There is example data and a config available in the <code>morpho_run</code> folder. This is <code>TE3_labels.mrc</code>, the same tomogram you'll be processing in the rest of the tutorial. You should check some details about it! You can also compare it to the tomogram itself.
+<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>imod<span class="w">                                   </span><span class="c1"># TODO: confirm</span>
+header<span class="w"> </span>/scratch/segmentation_dataset/morpho_run/datadir/TE3_labels.mrc
+header<span class="w"> </span>/scratch/segmentation_dataset/TE3_tomo.mrc
+3dmod<span class="w"> </span>/scratch/segmentation_dataset/morpho_run/datadir/TE3_labels.mrc
+3dmod<span class="w"> </span>/scratch/segmentation_dataset/TE3_tomo.mrc
+</code></pre></div></p>
+<h2 id="processing-your-data">Processing your data</h2>
+<h3 id="interactive-mesh-generation">Interactive mesh generation</h3>
+<p>We are going to do semi-interactive mesh generation in Meshlab to teach you how the sausage is made, but there is also a fully configurable pipeline (<code>python ../surface_morphometrics/segmentation_to_meshes.py config.yml</code>) that will do the whole thing for you.</p>
+<ol>
+<li>Prepare the xyz point cloud files to make new meshes:
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/scratch/segmentation_dataset/morpho_run
+python<span class="w"> </span>../surface_morphometrics/mrc2xyz.py<span class="w"> </span>-l<span class="w"> </span>-127<span class="w"> </span>datadir/TE3_labels.mrc<span class="w"> </span>workdir/TE3_OMM.xyz
+python<span class="w"> </span>../surface_morphometrics/mrc2xyz.py<span class="w"> </span>-l<span class="w"> </span>-126<span class="w"> </span>datadir/TE3_labels.mrc<span class="w"> </span>workdir/TE3_IMM.xyz
+</code></pre></div></li>
+<li>Launch <code>Meshlab</code>
+<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>meshlab<span class="w">                                </span><span class="c1"># TODO: confirm</span>
+meshlab
+</code></pre></div></li>
+<li>For each mesh file:<ol>
+<li>Filters-&gt;Normals, Curvatures, and Orientation-&gt;Compute Normals for Point Sets</li>
+<li>Filters-&gt;Remeshing, Simplification, and Reconstruction-&gt;Screened Poisson Surface Reconstruction</li>
+<li>Filters-&gt;Selection-&gt;Select Faces by Vertex Quality</li>
+<li>Filters-&gt;Selection-&gt;Delete Selected Faces</li>
+<li>Filters-&gt;Remeshing, Simplification, and Reconstruction-&gt;Quadric Edge Collapse Decimation</li>
+<li>File-&gt;Export Mesh As...-&gt;TE3_OMM.ply</li>
+</ol>
+</li>
+</ol>
+<h3 id="pipelined-processing-steps">Pipelined Processing Steps</h3>
+<ol>
+<li>If you wanted to make the meshes automatically: <code>python ../surface_morphometrics/segmentation_to_meshes.py config.yml</code>. We aren't doing this today because I think it's more fun to do by hand. If you have 30 tomograms each with 3-5 labels, it will no longer be fun.</li>
+<li>Convert the ply files to vtp files: <code>python ../surface_morphometrics/ply2vtp.py config.yml TE3_OMM.ply TE3_OMM.surface.vtp</code>. Do this again for IMM.</li>
+<li>Run pycurv for each surface (normally, this is best run in parallel on a cluster):
+    <code>python ../surface_morphometrics/run_pycurv.py config.yml TE3_OMM.surface.vtp</code>. Do this again for IMM (it will take a long time for IMM!)
+    You may see warnings about the curvature, this is normal and you do not need to worry.
+    We may run into memory constraints - if you do, you can reduce the number of triangles in the surface by setting <code>max_triangles</code> to a lower number in the config file. This will reduce the quality of the final surfaces, but will make the computation faster and lower-memory.</li>
+<li>Measure intra- and inter-surface distances and orientations (also best to run this one in parallel for each original segmentation): <code>python ../surface_morphometrics/measure_distances_orientations.py config.yml</code></li>
+<li>Don't do this today: Combine the results of the pycurv analysis into aggregate Experiments and generate statistics and plots. This requires some manual coding using the Experiment class and its associated methods in <code>morphometrics_stats.py</code>. Everything is roughly organized around working with the CSVs in pandas dataframes. Running <code>morphometrics_stats.py</code> as a script with the config file and a filename will output a pickle file with an assembled "experiment" object for all the tomos in the data folder. Reusing a pickle file will make your life way easier if you have dozens of tomograms to work with, but it doesn't save too much time with just the example data...</li>
+</ol>
+<p>Just in case you have problems running things fast (I don't have a great sense of how long this will take on these machines), I have provided usable output files for the downstream analysis you might want to check out. You can find them in the <code>morpho_run/workdir</code> folder.</p>
+<h2 id="inspecting-results">Inspecting Results</h2>
+<h3 id="visualizing-the-surfaces">Visualizing the surfaces</h3>
+<ol>
+<li>Load the surfaces in Paraview:<ul>
+<li>Open Paraview</li>
+<li>File -&gt; Open -&gt; TE3_OMM.surface.vtp</li>
+<li>File -&gt; Open -&gt; TE3_IMM.surface.vtp</li>
+<li>Make each visible</li>
+<li>Color by <code>curvedness_vv</code> to see the curvature of the surface</li>
+<li>Color by <code>OMM_dist</code> (or <code>IMM_dist</code>) to see the distance from the IMM to the OMM or vice-versa</li>
+</ul>
+</li>
+<li>Adjust color scales to see the features you are interested in. Add and edit the scalebar.</li>
+<li>Adjust the background, turn on ambient occlusion, and make the surfaces look nice for a screenshot.</li>
+<li>Take some nice pictures!</li>
+</ol>
+<h3 id="generating-some-basic-statistics-and-plots">Generating some basic statistics and plots</h3>
+<ul>
+<li><code>python ../surface_morphometrics/single_file_histogram.py workdir/TE3_IMM.AVV_rh8.csv -n curvedness_vv</code> will generate an area-weighted histogram for a feature of interest in a single tomogram. I am using a variant of this script to respond to reviews asking for more per-tomogram visualizations!</li>
+<li><code>python ../surface_morphometrics/single_file_2d.py workdir/TE3_IMM.AVV_rh8.csv -n1 curvedness_vv -n2 OMM_dist</code> will generate a 2D histogram for 2 features of interest for a single surface.</li>
+</ul>
+<h2 id="running-individual-steps-without-pipelining">Running individual steps without pipelining</h2>
+<p>Individual steps are available as click commands in the terminal, and as functions:</p>
+<ol>
+<li>Robust Mesh Generation<ol>
+<li><code>mrc2xyz.py</code> to prepare point clouds from voxel segmentation</li>
+<li><code>xyz2ply.py</code> to perform screened poisson reconstruction and mask the surface</li>
+<li><code>ply2vtp.py</code> to convert ply files to vtp files ready for pycurv</li>
+</ol>
+</li>
+<li>Surface Morphology Extraction<ol>
+<li><code>curvature.py</code> to run pycurv in an organized way on pregenerated surfaces</li>
+<li><code>intradistance_verticality.py</code> to generate distance metrics and verticality measurements within a surface.</li>
+<li><code>interdistance_orientation.py</code> to generate distance metrics and orientation measurements between surfaces.</li>
+<li>Outputs: gt graphs for further analysis, vtp files for paraview visualization, and CSV files for pandas-based plotting and statistics</li>
+</ol>
+</li>
+<li>Morphometric Quantification - there is no click function for this, as the questions answered depend on the biological system of interest!<ol>
+<li><code>morphometrics_stats.py</code> is a set of classes and functions to generate graphs and statistics with pandas.</li>
+<li><a href="https://www.paraview.org/">Paraview</a> for 3D surface mapping of quantifications.</li>
+</ol>
+</li>
+</ol>
+<h2 id="summary-of-file-types">Summary of File Types:</h2>
+<ul>
+<li>Files with <code>.xyz</code> extension are point clouds converted, in nm or angstrom scale. This is a flat text file with <code>X Y Z</code> coordinates in each line.</li>
+<li>Files with <code>.ply</code> extension are the surface meshes (in a binary format), which will be scaled in nm or angstrom scale, and work in many different softwares, including <a href="https://www.meshlab.net/">Meshlab</a>.</li>
+<li>Files with <code>surface.vtp</code> extension are the same surface meshes in the <a href="https://vtk.org/">VTK</a> format.<ul>
+<li>The <code>.surface.vtp</code> files are a less cross-compatible format, so you can't use them with as many types of software, but they are able to store all the fun quantifications you'll do! <a href="https://www.paraview.org/">Paraview</a> or <a href="https://docs.pyvista.org/">pyvista</a> can load this format. This is the format pycurv reads to build graphs.</li>
+</ul>
+</li>
+<li>Files with <code>.gt</code> extension are triangle graph files using the <code>graph-tool</code> python toolkit. These graphs enable rapid neighbor-wise operations such as tensor voting, but are not especially useful for manual inspection.</li>
+<li>Files with <code>.csv</code> extension are quantification outputs per-triangle. These are the files you'll use to generate statistics and plots.</li>
+<li>Files with <code>.log</code> extension are log files, mostly from the output of the pycurv run.</li>
+<li>Quantifications (plots and statistical tests) are output in csv, svg, and png formats.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 baradlab
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.sections", "navigation.expand", "search.highlight", "search.suggest", "content.tabs.link", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

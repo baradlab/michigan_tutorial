@@ -1,5 +1,12 @@
 [
   {
+    "version": "2026",
+    "title": "2026",
+    "aliases": [
+      "latest"
+    ]
+  },
+  {
     "version": "2024",
     "title": "2024",
     "aliases": []

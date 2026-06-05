@@ -65,7 +65,7 @@ This is where you can try out the denoiser in addition to the other "standard" p
 6. Move the box to a place where you can see some of each class of object. The 4-panel view can help with this.
 7. Switch to the segment panel and select the ROI painter -> round brush, and select the OTSU brush. This will allow you to paint in the different classes of objects quickly and efficiently (if your calibration is good!)
 8. Start painting! Ctrl-left click to paint in the different classes of objects, and shift-left click to erase.
-9. Once you are done, 
+9. Once you are done, right click the background class and select "Add all unlabeled voxels to class"
 9. Once you are done, right click on the box and select "Add to ROI", "New ROI", name it "Mask".
 
 ## Training a new neural network

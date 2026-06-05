@@ -1,11 +1,11 @@
-site_name: baradlab/michigan_tutorial
+site_name: CryoET Segmentation & Modeling Tutorial
 site_url: https://baradlab.com/michigan_tutorial
 site_author: baradlab
 site_description: >-
-  Segmentation and modeling tutorial for U Michigan
+  Segmentation and modeling tutorial for the U Michigan CryoET Workshop (2024 edition)
 repo_name: baradlab/michigan_tutorial
 repo_url: https://github.com/baradlab/michigan_tutorial
-edit_uri: edit/main/docs/
+edit_uri: edit/archive/2024/docs/
 copyright: Copyright &copy; 2024 baradlab
 
 
@@ -46,11 +46,15 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.highlight
   - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - md_in_html
   - pymdownx.arithmatex:
       generic: true
 
 plugins:
   - search
+
+extra:
+  version:
+    provider: mike

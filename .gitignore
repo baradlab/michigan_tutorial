@@ -1,0 +1,10 @@
+# Build output
+site/
+
+# Local docs toolchain
+.venv-docs/
+.venv/
+
+# OS cruft
+.DS_Store
+**/.DS_Store

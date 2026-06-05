@@ -1,5 +1,8 @@
 # Segmentation and Modeling for CryoET - putting the Cell in Cellular Structural Biology
 
+!!! warning "Archived edition (June 2024)"
+    You are viewing the **2024 edition** of this tutorial, presented at the University of Michigan CryoET Workshop in June 2024. The tools have moved on since then. For the current workflow (MemBrain, Mosaic, EasyMode, TARDIS, and updated surface morphometrics), see the [**latest edition**](https://baradlab.com/michigan_tutorial/) — use the version selector in the header to switch between editions.
+
 Segmentation and geometrical modeling for Cryo-ET are powerful processing steps that can be used to 
 generate better visualizations that capture the 3-dimensional nature of tomograms
 quantify ultrastructure of cellular features, 
@@ -11,7 +14,7 @@ Today, we will cover several different software tools that are used for studying
 The three major tools we will cover today are:
 
 * [Membrain-Seg](https://github.com/teamtomo/membrain-seg) - a deep learning-based tool for segmenting membranes in cryo-ET data. This tool is nearly bulletproof for segmenting membranes, and does not require retraining. It is developed by [Lorenz Lamm](https://scholar.google.com/citations?user=HscyH3QAAAAJ) as part a collaboration between Ben Engel and Tingying Ping's research groups, and is part of the [teamtomo community software development effort](https://github.com/teamtomo) led loosely by Alister Burt.
-* [Dragonfly](https://www.objectresearch.com/dragonfly) - a commercial software package that is widely used in the cryo-ET community for segmentation and modeling. [Matt Swulius](https://pure.psu.edu/en/persons/matthew-t-swulius) has developed a number of workflows for Dragonfly that are used for segmentation and modeling of cellular features. Dragonfly is especially nice for its user-friendly interface for generating training data and training and evaluating models for segmentation. This makes it great for studying your filament of choice, since it is flexible and does not rely on pretrained models.
+* [Dragonfly](https://dragonfly.comet.tech) - a commercial software package that is widely used in the cryo-ET community for segmentation and modeling. [Matt Swulius](https://pure.psu.edu/en/persons/matthew-t-swulius) has developed a number of workflows for Dragonfly that are used for segmentation and modeling of cellular features. Dragonfly is especially nice for its user-friendly interface for generating training data and training and evaluating models for segmentation. This makes it great for studying your filament of choice, since it is flexible and does not rely on pretrained models.
 * [Surface Morphometrics](https://github.com/grotjahnlab/surface_morphometrics) - an open-source toolkit for building high quality triangle mesh models in a fully automated way from segmentations in Cryo-ET, and using those segmentations to quantify local and global membrane ultrastructure. This software was developed by me during my postdoc in [Danielle Grotjahn's](https://grotjahnlab.org) lab at Scripps Research, and my lab is continuing to develop new methodology within the framework. 
 
 We'll also use the following tools for visualization and analysis:

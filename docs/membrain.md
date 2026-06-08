@@ -1,6 +1,6 @@
-# MemBrain
+# MemBrain-seg
 
-[MemBrain](https://github.com/teamtomo/membrain-seg) is a deep-learning tool for segmenting membranes in cryo-ET data. It is based on a model trained on a wide variety of cellular tomograms, and the pretrained model segments membranes with high accuracy out of the box — which makes it pretty much bulletproof as a first step for the segmentation process. As of **MemBrain v2** it is an end-to-end suite: `MemBrain-seg` (segmentation), `MemBrain-pick` (picking particles along membranes), and `MemBrain-stats` (statistics/morphometrics on those picks).
+[MemBrain-seg](https://github.com/teamtomo/membrain-seg) is a deep-learning tool for segmenting membranes in cryo-ET data. It is based on a model trained on a wide variety of cellular tomograms, and the pretrained model segments membranes with high accuracy out of the box — which makes it pretty much bulletproof as a first step for the segmentation process. As of **MemBrain v2** it is an end-to-end suite: `MemBrain-seg` (segmentation), `MemBrain-pick` (picking particles along membranes), and `MemBrain-stats` (statistics/morphometrics on those picks).
 
 If you want to do morphometrics, you can move quickly from a MemBrain segmentation to a mesh — though I recommend separating the membrane into individual semantic components first (we'll do that with [Mosaic](mosaic.md)).
 

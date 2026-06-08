@@ -13,12 +13,10 @@ copyright: Copyright &copy; 2026 baradlab
 nav:
   - Overview: index.md
   - Setup Steps: setup.md
-  - Segmentation:
-    - MemBrain: membrain.md
-    - Mosaic: mosaic.md
-    - EasyMode: easymode.md
-    - TARDIS: tardis.md
+  - MemBrain-seg: membrain.md
+  - Mosaic: mosaic.md
   - Surface Morphometrics: morphometrics.md
+  - Surforama: surforama.md
 
 theme:
   icon:

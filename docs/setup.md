@@ -36,30 +36,29 @@ module load imod   # TODO: confirm
 
 ## What we're going to do today
 
-1. Use **[MemBrain](membrain.md)** to segment the membranes in the tomogram with a pretrained model.
-2. Use **[Mosaic](mosaic.md)** to clean up and organize the membrane segmentation into semantic components and prepare surfaces.
-3. Use **[EasyMode](easymode.md)** to get a general multi-class segmentation of cellular content with no per-dataset training.
-4. Use **[TARDIS](tardis.md)** to instance-segment filaments (and membranes) in the tomogram.
-5. Use **[Surface Morphometrics](morphometrics.md)** to generate meshes and run some basic quantifications on the data.
+We'll follow a single membrane through the whole pipeline:
+
+1. Use **[MemBrain-seg](membrain.md)** to segment the membranes in the tomogram with a pretrained model.
+2. Use **[Mosaic](mosaic.md)** to clean up and organize the membrane segmentation into semantic components and build surface meshes.
+3. Use **[Surface Morphometrics](morphometrics.md)** to quantify membrane ultrastructure (curvature, distances, orientation) on those surfaces.
+4. Use **[Surforama](surforama.md)** to explore tomogram densities on the membrane surfaces and pick oriented membrane-associated proteins.
 
 ## Sanity-check that each tool launches
 
 Raise your hand and get my attention if any of these don't come up cleanly — better to sort it out now than mid-exercise!
 
 ```bash
-# MemBrain
+# MemBrain-seg
 conda activate membrain-seg      # TODO: confirm env name
 membrain --help
 
-# napari (used by Mosaic and TARDIS)
-napari
-
-# EasyMode
-# TODO: confirm activation + entrypoint
-
-# TARDIS
-# TODO: confirm activation + entrypoint (napari plugin and/or CLI)
+# Mosaic
+# TODO: confirm activation + launch command
 
 # Surface morphometrics
 conda activate morphometrics     # TODO: confirm env name
+
+# Surforama (napari plugin)
+# TODO: confirm activation
+napari
 ```

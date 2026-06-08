@@ -8,7 +8,7 @@ This is a [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) si
 
 | Edition | Tools covered | Source | URL |
 | --- | --- | --- | --- |
-| **2026** (latest) | MemBrain, Mosaic, EasyMode, TARDIS, Surface Morphometrics | `main` branch | <https://baradlab.com/michigan_tutorial/> (and `/2026/`) |
+| **2026** (latest) | MemBrain-seg, Mosaic, Surface Morphometrics, Surforama | `main` branch | <https://baradlab.com/michigan_tutorial/> (and `/2026/`) |
 | **2024** (archived) | MemBrain-Seg, Dragonfly, Surface Morphometrics | `archive/2024` branch | <https://baradlab.com/michigan_tutorial/2024/> |
 
 Use the version selector in the site header to switch between editions.

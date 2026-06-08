@@ -29,7 +29,7 @@
     
     
       
-        <title>MemBrain - CryoET Segmentation & Modeling Tutorial</title>
+        <title>MemBrain-seg - CryoET Segmentation & Modeling Tutorial</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#membrain" class="md-skip">
+        <a href="#membrain-seg" class="md-skip">
           Skip to content
         </a>
       
@@ -120,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              MemBrain
+              MemBrain-seg
             
           </span>
         </div>
@@ -309,60 +309,6 @@
   
   
   
-    
-    
-    
-    
-      
-        
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
-        
-          
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Segmentation
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_3">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Segmentation
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-    
-  
-  
-  
     <li class="md-nav__item md-nav__item--active">
       
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
@@ -378,7 +324,7 @@
   <span class="md-ellipsis">
     
   
-    MemBrain
+    MemBrain-seg
   
 
     
@@ -396,7 +342,7 @@
   <span class="md-ellipsis">
     
   
-    MemBrain
+    MemBrain-seg
   
 
     
@@ -472,10 +418,9 @@
     </li>
   
 
-              
-            
-              
-                
+    
+      
+      
   
   
   
@@ -500,70 +445,6 @@
     </li>
   
 
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../easymode/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    EasyMode
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../tardis/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    TARDIS
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
     
       
       
@@ -580,6 +461,33 @@
     
   
     Surface Morphometrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../surforama/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Surforama
   
 
     
@@ -682,8 +590,8 @@
   
 
 
-<h1 id="membrain">MemBrain</h1>
-<p><a href="https://github.com/teamtomo/membrain-seg">MemBrain</a> is a deep-learning tool for segmenting membranes in cryo-ET data. It is based on a model trained on a wide variety of cellular tomograms, and the pretrained model segments membranes with high accuracy out of the box — which makes it pretty much bulletproof as a first step for the segmentation process. As of <strong>MemBrain v2</strong> it is an end-to-end suite: <code>MemBrain-seg</code> (segmentation), <code>MemBrain-pick</code> (picking particles along membranes), and <code>MemBrain-stats</code> (statistics/morphometrics on those picks).</p>
+<h1 id="membrain-seg">MemBrain-seg</h1>
+<p><a href="https://github.com/teamtomo/membrain-seg">MemBrain-seg</a> is a deep-learning tool for segmenting membranes in cryo-ET data. It is based on a model trained on a wide variety of cellular tomograms, and the pretrained model segments membranes with high accuracy out of the box — which makes it pretty much bulletproof as a first step for the segmentation process. As of <strong>MemBrain v2</strong> it is an end-to-end suite: <code>MemBrain-seg</code> (segmentation), <code>MemBrain-pick</code> (picking particles along membranes), and <code>MemBrain-stats</code> (statistics/morphometrics on those picks).</p>
 <p>If you want to do morphometrics, you can move quickly from a MemBrain segmentation to a mesh — though I recommend separating the membrane into individual semantic components first (we'll do that with <a href="../mosaic/">Mosaic</a>).</p>
 <div class="admonition note">
 <p class="admonition-title">Verify before the workshop — TODO</p>

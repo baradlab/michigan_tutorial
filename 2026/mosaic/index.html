@@ -18,7 +18,7 @@
         <link rel="prev" href="../membrain/">
       
       
-        <link rel="next" href="../easymode/">
+        <link rel="next" href="../morphometrics/">
       
       
         
@@ -305,60 +305,6 @@
       
   
   
-    
-  
-  
-  
-    
-    
-    
-    
-      
-        
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
-        
-          
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Segmentation
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_3">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Segmentation
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
   
   
     <li class="md-nav__item">
@@ -369,7 +315,7 @@
   <span class="md-ellipsis">
     
   
-    MemBrain
+    MemBrain-seg
   
 
     
@@ -381,10 +327,9 @@
     </li>
   
 
-              
-            
-              
-                
+    
+      
+      
   
   
     
@@ -511,70 +456,6 @@
     </li>
   
 
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../easymode/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    EasyMode
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../tardis/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    TARDIS
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
     
       
       
@@ -591,6 +472,33 @@
     
   
     Surface Morphometrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../surforama/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Surforama
   
 
     
@@ -705,45 +613,53 @@
 
 
 <h1 id="mosaic">Mosaic</h1>
-<p>Mosaic is an interactive toolkit (out of the Engel lab) for <strong>editing membrane segmentations and turning them into clean, organized surface models</strong>. After MemBrain gives us raw membrane voxels, Mosaic is where we split them into semantic components (OMM, IMM, ER, vesicles, …), clean up artifacts, and produce tidy point clouds / meshes that downstream morphometrics can consume.</p>
-<div class="admonition warning">
-<p class="admonition-title">Confirm before the workshop — TODO</p>
-<p>I scaffolded this page from the workshop outline. Please confirm the canonical details before publishing:</p>
+<p><a href="https://github.com/KosinskiLab/mosaic">Mosaic</a> is a unified, GUI-driven tool from the <a href="https://www.embl.org/groups/kosinski/">Kosinski lab</a> (EMBL Hamburg) for <strong>analyzing and modeling biomembranes from 3D structural data</strong>. It pulls the whole "segmentation → model" path into one interface: import a tomogram, clean and segment membranes, build surface meshes, localize proteins, measure geometry, and export simulation-ready systems. It's the spiritual successor to the lab's earlier <a href="https://github.com/KosinskiLab/colabseg">ColabSeg</a>.</p>
+<p>In today's workflow, Mosaic is where we take the raw membrane voxels from <a href="../membrain/">MemBrain-seg</a>, clean them up, split them into semantic components, and build the surface meshes we'll quantify in <a href="../morphometrics/">Surface Morphometrics</a>.</p>
 <ul>
-<li><strong>Install / launch</strong> — package name, conda env, and whether we run it as a napari plugin or standalone.</li>
-<li><strong>Repository / citation link</strong> — update the link in the <a href="../">Overview</a> and below.</li>
-<li><strong>Exact menu/operation names</strong> for the steps in "Workflow" below.</li>
+<li><strong>Repo:</strong> <a href="https://github.com/KosinskiLab/mosaic">https://github.com/KosinskiLab/mosaic</a></li>
+<li><strong>Docs:</strong> <a href="https://kosinskilab.github.io/mosaic/">https://kosinskilab.github.io/mosaic/</a></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Confirm before the workshop — TODO</p>
+<p>The description and links above are correct, but please confirm the workshop-machine specifics and the exact step names before publishing:</p>
+<ul>
+<li><strong>Install / launch</strong> — env name and launch command on this year's machines.</li>
+<li><strong>Exact menu/operation names</strong> for the steps under "Workflow" below (Mosaic evolves quickly).</li>
 </ul>
 </div>
 <h2 id="when-to-use-it">When to use it</h2>
 <ul>
-<li>You have a membrane segmentation (e.g. from <a href="../membrain/">MemBrain</a>) that needs cleanup or splitting into semantic classes.</li>
-<li>You want to go from voxel segmentation to a clean surface/mesh model interactively, rather than via the fully automated pipeline.</li>
+<li>You have a membrane segmentation (e.g. from <a href="../membrain/">MemBrain-seg</a>) that needs cleanup or splitting into semantic classes.</li>
+<li>You want to go from voxel segmentation to clean surface meshes interactively, all in one place.</li>
+<li>You also want protein localization / geometry analysis / export to physical simulation down the line.</li>
 </ul>
 <h2 id="setup">Setup</h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># TODO: confirm env + launch command</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># TODO: confirm env + launch command on the workshop machines</span>
 conda<span class="w"> </span>activate<span class="w"> </span>mosaic<span class="w">        </span><span class="c1"># placeholder</span>
-napari<span class="w">                       </span><span class="c1"># if Mosaic is a napari plugin</span>
+mosaic<span class="w">                       </span><span class="c1"># placeholder entrypoint</span>
 </code></pre></div>
+<p>See the <a href="https://kosinskilab.github.io/mosaic/">installation docs</a> for the canonical instructions.</p>
 <h2 id="workflow">Workflow</h2>
 <div class="admonition note">
 <p class="admonition-title">TODO: fill in concrete steps from the workshop machines</p>
 </div>
 <ol>
-<li>Load the tomogram and the MemBrain membrane segmentation.</li>
+<li>Import the tomogram and the MemBrain-seg membrane segmentation.</li>
+<li>Clean up the segmentation — remove stray points/voxels, fill small gaps, trim at borders.</li>
 <li>Separate the segmentation into semantic components (e.g. OMM, IMM, ER, vesicle).</li>
-<li>Clean up stray voxels / fill small holes / trim segmentation at borders.</li>
-<li>Export each component for modeling — point cloud and/or mesh.</li>
+<li>Build surface meshes from the cleaned components.</li>
+<li>(Optional, beyond today) localize proteins, measure geometry, and export a simulation-ready system.</li>
 </ol>
 <h2 id="outputs">Outputs</h2>
 <ul>
 <li>Cleaned, per-class membrane segmentations.</li>
-<li>Surface/mesh models ready for <a href="../morphometrics/">Surface Morphometrics</a>.</li>
+<li>Surface meshes ready for <a href="../morphometrics/">Surface Morphometrics</a>.</li>
 </ul>
 <h2 id="tips">Tips</h2>
 <ul>
 <li>Do the semantic separation here once, carefully — it pays off through the entire morphometrics pipeline.</li>
 <li>Keep class names consistent with what you'll put in the morphometrics <code>config.yml</code> (e.g. <code>OMM</code>, <code>IMM</code>).</li>
+<li>Mosaic and Surface Morphometrics overlap on geometry analysis — today we use Mosaic for cleanup + meshing and Surface Morphometrics for the curvature/distance quantification, but it's worth knowing Mosaic can do more on its own.</li>
 </ul>
 
 

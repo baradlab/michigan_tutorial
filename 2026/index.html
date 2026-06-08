@@ -323,21 +323,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#segmentation-tools-we-will-cover-today" class="md-nav__link">
+  <a href="#the-workflow-we-will-cover-today" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Segmentation tools we will cover today
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#surface-morphometrics" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Surface Morphometrics
+        The workflow we will cover today
       
     </span>
   </a>
@@ -396,60 +385,6 @@
   
   
   
-    
-    
-    
-    
-      
-        
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-        
-        
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
-        
-          
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Segmentation
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Segmentation
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
     <li class="md-nav__item">
       <a href="membrain/" class="md-nav__link">
         
@@ -458,7 +393,7 @@
   <span class="md-ellipsis">
     
   
-    MemBrain
+    MemBrain-seg
   
 
     
@@ -470,10 +405,9 @@
     </li>
   
 
-              
-            
-              
-                
+    
+      
+      
   
   
   
@@ -498,70 +432,6 @@
     </li>
   
 
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="easymode/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    EasyMode
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="tardis/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    TARDIS
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
     
       
       
@@ -578,6 +448,33 @@
     
   
     Surface Morphometrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="surforama/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Surforama
   
 
     
@@ -628,21 +525,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#segmentation-tools-we-will-cover-today" class="md-nav__link">
+  <a href="#the-workflow-we-will-cover-today" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Segmentation tools we will cover today
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#surface-morphometrics" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Surface Morphometrics
+        The workflow we will cover today
       
     </span>
   </a>
@@ -692,23 +578,20 @@ and provide supporting geometry for particle localization and subtomogram averag
 <p>Because every cellular tomography project involves a different set of features — studying membranes, filaments, large protein complexes, or phase separation — the tools and techniques used for segmentation and modeling can vary widely.
 Today, we will cover several different software tools that are used for studying membranes and filaments in cryo-ET. If you are interested in studying these or other aspects of cellular ultrastructure, please reach out to me and I will be happy to help you find the right tools for your specific project, or to collaborate to develop new tools if needed - I am always looking for new projects!</p>
 <h2 id="whats-new-since-2024">What's new since 2024</h2>
-<p>The segmentation landscape has moved fast. In 2024 we leaned on MemBrain-Seg for membranes and Dragonfly for everything else. In 2026, a family of general pretrained networks means you can get high-quality multi-class segmentations with little or no manual training, and the modeling/morphometrics side has been streamlined with new tooling. We've retired the Dragonfly section in favor of these newer, mostly-open approaches.</p>
-<h2 id="segmentation-tools-we-will-cover-today">Segmentation tools we will cover today</h2>
+<p>The segmentation and modeling landscape has moved fast. In 2024 we leaned on MemBrain-Seg for membranes and Dragonfly for everything else. In 2026 we focus on a tighter, mostly-open membrane workflow: segment with MemBrain-seg, clean up and mesh in Mosaic, quantify ultrastructure with Surface Morphometrics, and explore/pick membrane-associated proteins on the resulting surfaces with Surforama. We've retired the Dragonfly section.</p>
+<h2 id="the-workflow-we-will-cover-today">The workflow we will cover today</h2>
+<p>We'll follow a single membrane through the whole pipeline, in order:</p>
 <ul>
-<li><a href="https://github.com/teamtomo/membrain-seg"><strong>MemBrain</strong></a> — a deep learning-based tool for segmenting membranes in cryo-ET data. It is nearly bulletproof for segmenting membranes with a pretrained model and does not require retraining. MemBrain v2 adds picking (MemBrain-pick) and statistics (MemBrain-stats) on top of segmentation. It is developed by <a href="https://scholar.google.com/citations?user=HscyH3QAAAAJ">Lorenz Lamm</a> as part of a collaboration between the Engel and Tingying Peng research groups, and is part of the <a href="https://github.com/teamtomo">teamtomo community software development effort</a>.</li>
-<li><a href="#"><strong>Mosaic</strong></a> — an interactive toolkit out of the Engel lab for editing membrane segmentations and turning them into clean, physically regularized mesh/surface models that are ready for downstream analysis and simulation. We'll use it to clean up and organize membrane segmentations into semantic components before modeling.</li>
-<li><a href="https://www.biorxiv.org/content/10.64898/2026.05.19.726344v1"><strong>EasyMode</strong></a> — a library of general pretrained segmentation networks for cellular cryo-ET, trained on thousands of tilt series across a wide variety of sources. EasyMode renders tomogram content computationally accessible without any per-dataset training, which makes it a powerful first pass for finding the many different elements of cellular architecture and feeding flexible subtomogram-averaging workflows.</li>
-<li><a href="https://github.com/SMLC-NYSBC/napari-tardis_em"><strong>TARDIS</strong></a> — <em>Transformer-bAsed Rapid Dimensionless Instance Segmentation</em>. TARDIS provides pretrained models that <strong>instance</strong>-segment filaments and membranes across modalities (cryo-ET, cryo-EM, plastic-section ET) in a single framework without retraining, and is especially strong on microtubules and other filaments. Developed by <a href="https://github.com/RRobert92">Robert Kiewisz</a> and colleagues at NYSBC.</li>
-</ul>
-<h2 id="surface-morphometrics">Surface Morphometrics</h2>
-<ul>
-<li><a href="https://github.com/grotjahnlab/surface_morphometrics"><strong>Surface Morphometrics</strong></a> — an open-source toolkit for building high-quality triangle-mesh models in a fully automated way from segmentations in cryo-ET, and using those models to quantify local and global membrane ultrastructure. This software was developed by me during my postdoc in <a href="https://grotjahnlab.org">Danielle Grotjahn's</a> lab at Scripps Research, and my lab continues to develop new methodology within the framework — including newer helper tools like <a href="https://github.com/teamtomo/qvox"><code>qvox</code></a> for voxel-array operations and <a href="https://github.com/bbarad/ETSegTools"><code>ETSegTools</code></a> for manipulating multilabel segmentations.</li>
+<li><a href="https://github.com/teamtomo/membrain-seg"><strong>MemBrain-seg</strong></a> — a deep learning-based tool for segmenting membranes in cryo-ET data. It is nearly bulletproof for segmenting membranes with a pretrained model and does not require retraining. MemBrain-seg is part of the broader MemBrain v2 suite (which also adds picking and statistics). It is developed by <a href="https://scholar.google.com/citations?user=HscyH3QAAAAJ">Lorenz Lamm</a> and collaborators, and is part of the <a href="https://github.com/teamtomo">teamtomo community software development effort</a>.</li>
+<li><a href="https://github.com/KosinskiLab/mosaic"><strong>Mosaic</strong></a> — a unified GUI tool from the <a href="https://www.embl.org/groups/kosinski/">Kosinski lab</a> (EMBL Hamburg) for analyzing and modeling biomembranes from 3D structural data. It takes you from a tomogram and segmentation through cleanup, semantic separation, and surface meshing — and can go further to protein localization, geometry analysis, and simulation-ready export. We'll use it to clean up and organize the MemBrain-seg output into components and build surface meshes. (<a href="https://kosinskilab.github.io/mosaic/">docs</a>)</li>
+<li><a href="https://github.com/grotjahnlab/surface_morphometrics"><strong>Surface Morphometrics</strong></a> — an open-source toolkit for building high-quality triangle-mesh models from membrane segmentations and using them to quantify local and global membrane ultrastructure (curvature, inter-/intra-membrane distances, orientation). This software was developed by me during my postdoc in <a href="https://grotjahnlab.org">Danielle Grotjahn's</a> lab at Scripps Research, and my lab continues to develop new methodology within the framework — including newer helper tools like <a href="https://github.com/teamtomo/qvox"><code>qvox</code></a> for voxel-array operations and <a href="https://github.com/bbarad/ETSegTools"><code>ETSegTools</code></a> for manipulating multilabel segmentations.</li>
+<li><a href="https://github.com/cellcanvas/surforama"><strong>Surforama</strong></a> — a <a href="https://napari.org/">napari</a> plugin for interactively exploring volumetric data on 3D surfaces. It projects tomogram density onto a membrane mesh so you can see and pick membrane-associated proteins, and exports oriented particles as RELION STAR files for subtomogram averaging. Developed by Kevin Yamauchi, Kyle Harrington, and collaborators (<a href="https://github.com/teamtomo">teamtomo</a> / <a href="https://github.com/cellcanvas">cellcanvas</a>).</li>
 </ul>
 <h2 id="visualization-and-analysis-utilities">Visualization and analysis utilities</h2>
 <p>We'll also use the following tools for visualization and analysis:</p>
 <ul>
 <li><a href="https://bio3d.colorado.edu/imod/">IMOD</a> - a suite of tools for 3D reconstruction and modeling of tomographic data. We will use IMOD (<code>3dmod</code>) for visualization of tomograms and segmentations.</li>
-<li><a href="https://napari.org/">napari</a> - a fast, interactive n-dimensional image viewer for Python. Several of today's tools (Mosaic, TARDIS) ship as napari plugins.</li>
+<li><a href="https://napari.org/">napari</a> - a fast, interactive n-dimensional image viewer for Python. Surforama ships as a napari plugin.</li>
 <li><a href="https://www.meshlab.net/">Meshlab</a> - a powerful open-source tool for processing and editing 3D meshes. We will use Meshlab for manual generation of triangle meshes.</li>
 <li><a href="https://www.paraview.org/">Paraview</a> - a powerful open-source tool for visualization and analysis of large datasets. We will use Paraview for visualization of quantifications on meshes.</li>
 </ul>

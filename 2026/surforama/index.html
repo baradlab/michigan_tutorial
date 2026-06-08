@@ -12,13 +12,11 @@
         <meta name="author" content="baradlab">
       
       
-        <link rel="canonical" href="https://baradlab.com/michigan_tutorial/2026/tardis/">
+        <link rel="canonical" href="https://baradlab.com/michigan_tutorial/2026/surforama/">
       
       
-        <link rel="prev" href="../easymode/">
+        <link rel="prev" href="../morphometrics/">
       
-      
-        <link rel="next" href="../morphometrics/">
       
       
         
@@ -29,7 +27,7 @@
     
     
       
-        <title>TARDIS - CryoET Segmentation & Modeling Tutorial</title>
+        <title>Surforama - CryoET Segmentation & Modeling Tutorial</title>
       
     
     
@@ -80,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#tardis" class="md-skip">
+        <a href="#surforama" class="md-skip">
           Skip to content
         </a>
       
@@ -120,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              TARDIS
+              Surforama
             
           </span>
         </div>
@@ -305,60 +303,6 @@
       
   
   
-    
-  
-  
-  
-    
-    
-    
-    
-      
-        
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
-        
-          
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Segmentation
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_3">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Segmentation
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
   
   
     <li class="md-nav__item">
@@ -369,7 +313,7 @@
   <span class="md-ellipsis">
     
   
-    MemBrain
+    MemBrain-seg
   
 
     
@@ -381,10 +325,9 @@
     </li>
   
 
-              
-            
-              
-                
+    
+      
+      
   
   
   
@@ -409,23 +352,22 @@
     </li>
   
 
-              
-            
-              
-                
+    
+      
+      
   
   
   
   
     <li class="md-nav__item">
-      <a href="../easymode/" class="md-nav__link">
+      <a href="../morphometrics/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    EasyMode
+    Surface Morphometrics
   
 
     
@@ -437,10 +379,9 @@
     </li>
   
 
-              
-            
-              
-                
+    
+      
+      
   
   
     
@@ -462,7 +403,7 @@
   <span class="md-ellipsis">
     
   
-    TARDIS
+    Surforama
   
 
     
@@ -480,7 +421,7 @@
   <span class="md-ellipsis">
     
   
-    TARDIS
+    Surforama
   
 
     
@@ -528,10 +469,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#running-tardis" class="md-nav__link">
+  <a href="#workflow" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Running TARDIS
+        Workflow
       
     </span>
   </a>
@@ -564,41 +505,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../morphometrics/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Surface Morphometrics
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -652,10 +558,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#running-tardis" class="md-nav__link">
+  <a href="#workflow" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Running TARDIS
+        Workflow
       
     </span>
   </a>
@@ -704,54 +610,50 @@
   
 
 
-<h1 id="tardis">TARDIS</h1>
-<p><a href="https://github.com/SMLC-NYSBC/napari-tardis_em">TARDIS</a> — <em>Transformer-bAsed Rapid Dimensionless Instance Segmentation</em> — is a deep-learning framework that automatically and accurately annotates <strong>filaments and membranes</strong>. Its pretrained models perform <strong>instance</strong> segmentation (each filament gets its own label, not just a "filament/not-filament" mask) across modalities — cryo-ET, cryo-EM, and plastic-section ET, in both 2D and 3D — in a single framework <strong>without retraining or tuning</strong>. It's especially strong on microtubules and other cytoskeletal filaments, with large reported accuracy gains over older tools.</p>
-<p>It ships both as a CLI (<code>tardis-em</code> on <a href="https://pypi.org/project/tardis-em/">PyPI</a>) and as a <a href="https://napari-hub.org/plugins/napari-tardis-em.html">napari plugin</a>. Developed by <a href="https://github.com/RRobert92">Robert Kiewisz</a> and colleagues at NYSBC. Paper: <a href="https://www.biorxiv.org/content/10.1101/2024.12.19.629196v1">Kiewisz et al., bioRxiv 2024</a>.</p>
-<div class="admonition warning">
+<h1 id="surforama">Surforama</h1>
+<p><a href="https://github.com/cellcanvas/surforama">Surforama</a> is a <a href="https://napari.org/">napari</a> plugin for <strong>interactively exploring volumetric data by leveraging 3D surfaces</strong>. Given a membrane surface mesh, it projects the local tomogram density onto the surface so you can see what's sitting on (or in) the membrane, annotate and pick particles directly on the surface, and export oriented particles as RELION-formatted STAR files for subtomogram averaging.</p>
+<p>It pairs naturally with the surfaces we build in <a href="../mosaic/">Mosaic</a> / <a href="../morphometrics/">Surface Morphometrics</a>: once you have a clean membrane mesh, Surforama turns it into a tool for finding and orienting membrane-associated proteins. Developed by Kevin Yamauchi, Kyle Harrington, and collaborators (<a href="https://github.com/teamtomo">teamtomo</a> / <a href="https://github.com/cellcanvas">cellcanvas</a>).</p>
+<ul>
+<li><strong>Repo:</strong> <a href="https://github.com/cellcanvas/surforama">https://github.com/cellcanvas/surforama</a></li>
+<li><strong>Paper:</strong> <a href="https://www.biorxiv.org/content/10.1101/2024.05.30.596601v2">Surforama: interactive exploration of volumetric data by leveraging 3D surfaces (bioRxiv 2024)</a></li>
+</ul>
+<div class="admonition note">
 <p class="admonition-title">Confirm before the workshop — TODO</p>
-<p>Confirm this year's env, whether we run the CLI or the napari plugin, and the correct pretrained model name for our data.</p>
+<p>Confirm this year's env/install and which surface + tomogram we load, then fill in the concrete click-path below.</p>
 </div>
 <h2 id="when-to-use-it">When to use it</h2>
 <ul>
-<li>You need <strong>individual filaments</strong> segmented and separated (instance segmentation), not just a binary mask — e.g. for counting, length/orientation measurement, or per-filament downstream analysis.</li>
-<li>Microtubules, actin, and other filaments; also a strong membrane segmenter.</li>
+<li>You have a membrane surface mesh and want to <strong>see densities on it</strong> in context.</li>
+<li>You want to <strong>pick particles on a membrane surface</strong> with sensible orientations (normal to the membrane).</li>
+<li>You want oriented particles exported to <strong>RELION STAR</strong> files to feed subtomogram averaging.</li>
 </ul>
 <h2 id="setup">Setup</h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># TODO: confirm env + install</span>
-conda<span class="w"> </span>activate<span class="w"> </span>tardis<span class="w">        </span><span class="c1"># placeholder</span>
-<span class="c1"># CLI:    pip install tardis-em</span>
-<span class="c1"># napari: pip install napari-tardis_em ; then: napari</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># TODO: confirm env + install on the workshop machines</span>
+conda<span class="w"> </span>activate<span class="w"> </span>surforama<span class="w">     </span><span class="c1"># placeholder</span>
+pip<span class="w"> </span>install<span class="w"> </span>surforama<span class="w">        </span><span class="c1"># installs the napari plugin</span>
+napari
 </code></pre></div>
-<h2 id="running-tardis">Running TARDIS</h2>
+<h2 id="workflow">Workflow</h2>
 <div class="admonition note">
-<p class="admonition-title">TODO: fill in concrete commands from the workshop machines</p>
+<p class="admonition-title">TODO: fill in concrete steps from the workshop machines</p>
 </div>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">CLI</label><label for="__tabbed_1_2">napari plugin</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="highlight"><pre><span></span><code><span class="c1"># TODO: confirm subcommand + flags for current tardis-em</span>
-<span class="c1"># tardis_mt   --path &lt;tomogram&gt;.mrc ...   # microtubules / filaments</span>
-<span class="c1"># tardis_mem  --path &lt;tomogram&gt;.mrc ...   # membranes</span>
-</code></pre></div>
-</div>
-<div class="tabbed-block">
 <ol>
-<li>Launch <code>napari</code>.</li>
-<li>Open the TARDIS plugin from the Plugins menu.</li>
-<li>Load the tomogram, choose the pretrained model (filament vs membrane), and run.</li>
+<li>Launch <code>napari</code> and open the Surforama plugin (Plugins menu).</li>
+<li>Load the tomogram and a membrane surface mesh (e.g. the <code>.vtp</code>/mesh from Mosaic or Surface Morphometrics).</li>
+<li>Project the tomogram density onto the surface and adjust the sampling depth/contrast to see membrane-associated features.</li>
+<li>Pick particles on the surface; orientations are taken from the surface normals.</li>
+<li>Export the oriented particles as a RELION STAR file for subtomogram averaging.</li>
 </ol>
-</div>
-</div>
-</div>
 <h2 id="outputs">Outputs</h2>
 <ul>
-<li>Instance-labeled filaments (each filament a distinct label) and/or membrane segmentations.</li>
-<li>Point-cloud / coordinate outputs for the segmented instances, suitable for downstream measurement.</li>
+<li>Surface-projected views of the tomogram density for inspection/figures.</li>
+<li>Picked particles with positions <strong>and orientations</strong> on the membrane.</li>
+<li>RELION-formatted STAR files ready for subtomogram averaging.</li>
 </ul>
 <h2 id="tips">Tips</h2>
 <ul>
-<li>TARDIS instance labels pair nicely with morphometrics when you want per-filament statistics.</li>
-<li>Pretrained models cover common cases without tuning — but as always, check the result against the raw tomogram.</li>
+<li>The quality of your picks depends on the quality of the surface — clean meshing in <a href="../mosaic/">Mosaic</a> pays off here too.</li>
+<li>Surface normals give you orientation priors "for free," which is a big head start for averaging membrane proteins.</li>
 </ul>
 
 

@@ -398,60 +398,6 @@
   
   
   
-    
-    
-    
-    
-      
-        
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-        
-        
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
-        
-          
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Segmentation
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Segmentation
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
     <li class="md-nav__item">
       <a href="../membrain/" class="md-nav__link">
         
@@ -460,7 +406,7 @@
   <span class="md-ellipsis">
     
   
-    MemBrain
+    MemBrain-seg
   
 
     
@@ -472,10 +418,9 @@
     </li>
   
 
-              
-            
-              
-                
+    
+      
+      
   
   
   
@@ -500,70 +445,6 @@
     </li>
   
 
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../easymode/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    EasyMode
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../tardis/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    TARDIS
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
     
       
       
@@ -580,6 +461,33 @@
     
   
     Surface Morphometrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../surforama/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Surforama
   
 
     
@@ -708,30 +616,28 @@
 3dmod<span class="w"> </span>/scratch/segmentation_dataset/&lt;tomogram&gt;.mrc
 </code></pre></div>
 <h2 id="what-were-going-to-do-today">What we're going to do today</h2>
+<p>We'll follow a single membrane through the whole pipeline:</p>
 <ol>
-<li>Use <strong><a href="../membrain/">MemBrain</a></strong> to segment the membranes in the tomogram with a pretrained model.</li>
-<li>Use <strong><a href="../mosaic/">Mosaic</a></strong> to clean up and organize the membrane segmentation into semantic components and prepare surfaces.</li>
-<li>Use <strong><a href="../easymode/">EasyMode</a></strong> to get a general multi-class segmentation of cellular content with no per-dataset training.</li>
-<li>Use <strong><a href="../tardis/">TARDIS</a></strong> to instance-segment filaments (and membranes) in the tomogram.</li>
-<li>Use <strong><a href="../morphometrics/">Surface Morphometrics</a></strong> to generate meshes and run some basic quantifications on the data.</li>
+<li>Use <strong><a href="../membrain/">MemBrain-seg</a></strong> to segment the membranes in the tomogram with a pretrained model.</li>
+<li>Use <strong><a href="../mosaic/">Mosaic</a></strong> to clean up and organize the membrane segmentation into semantic components and build surface meshes.</li>
+<li>Use <strong><a href="../morphometrics/">Surface Morphometrics</a></strong> to quantify membrane ultrastructure (curvature, distances, orientation) on those surfaces.</li>
+<li>Use <strong><a href="../surforama/">Surforama</a></strong> to explore tomogram densities on the membrane surfaces and pick oriented membrane-associated proteins.</li>
 </ol>
 <h2 id="sanity-check-that-each-tool-launches">Sanity-check that each tool launches</h2>
 <p>Raise your hand and get my attention if any of these don't come up cleanly — better to sort it out now than mid-exercise!</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># MemBrain</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># MemBrain-seg</span>
 conda<span class="w"> </span>activate<span class="w"> </span>membrain-seg<span class="w">      </span><span class="c1"># TODO: confirm env name</span>
 membrain<span class="w"> </span>--help
 
-<span class="c1"># napari (used by Mosaic and TARDIS)</span>
-napari
-
-<span class="c1"># EasyMode</span>
-<span class="c1"># TODO: confirm activation + entrypoint</span>
-
-<span class="c1"># TARDIS</span>
-<span class="c1"># TODO: confirm activation + entrypoint (napari plugin and/or CLI)</span>
+<span class="c1"># Mosaic</span>
+<span class="c1"># TODO: confirm activation + launch command</span>
 
 <span class="c1"># Surface morphometrics</span>
 conda<span class="w"> </span>activate<span class="w"> </span>morphometrics<span class="w">     </span><span class="c1"># TODO: confirm env name</span>
+
+<span class="c1"># Surforama (napari plugin)</span>
+<span class="c1"># TODO: confirm activation</span>
+napari
 </code></pre></div>
 
 

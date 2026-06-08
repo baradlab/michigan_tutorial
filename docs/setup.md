@@ -39,8 +39,8 @@ module load imod   # TODO: confirm
 We'll follow a single membrane through the whole pipeline:
 
 1. Use **[MemBrain-seg](membrain.md)** to segment the membranes in the tomogram with a pretrained model.
-2. Use **[Mosaic](mosaic.md)** to clean up and organize the membrane segmentation into semantic components and build surface meshes.
-3. Use **[Surface Morphometrics](morphometrics.md)** to quantify membrane ultrastructure (curvature, distances, orientation) on those surfaces.
+2. Use **[Mosaic](mosaic.md)** to clean up the membrane segmentation and split it into semantic components.
+3. Use **[Surface Morphometrics](morphometrics.md)** to build surface meshes from the cleaned segmentation and quantify membrane ultrastructure (curvature, distances, orientation).
 4. Use **[Surforama](surforama.md)** to explore tomogram densities on the membrane surfaces and pick oriented membrane-associated proteins.
 
 ## Sanity-check that each tool launches

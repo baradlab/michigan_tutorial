@@ -619,8 +619,8 @@
 <p>We'll follow a single membrane through the whole pipeline:</p>
 <ol>
 <li>Use <strong><a href="../membrain/">MemBrain-seg</a></strong> to segment the membranes in the tomogram with a pretrained model.</li>
-<li>Use <strong><a href="../mosaic/">Mosaic</a></strong> to clean up and organize the membrane segmentation into semantic components and build surface meshes.</li>
-<li>Use <strong><a href="../morphometrics/">Surface Morphometrics</a></strong> to quantify membrane ultrastructure (curvature, distances, orientation) on those surfaces.</li>
+<li>Use <strong><a href="../mosaic/">Mosaic</a></strong> to clean up the membrane segmentation and split it into semantic components.</li>
+<li>Use <strong><a href="../morphometrics/">Surface Morphometrics</a></strong> to build surface meshes from the cleaned segmentation and quantify membrane ultrastructure (curvature, distances, orientation).</li>
 <li>Use <strong><a href="../surforama/">Surforama</a></strong> to explore tomogram densities on the membrane surfaces and pick oriented membrane-associated proteins.</li>
 </ol>
 <h2 id="sanity-check-that-each-tool-launches">Sanity-check that each tool launches</h2>

@@ -614,7 +614,7 @@
 
 <h1 id="mosaic">Mosaic</h1>
 <p><a href="https://github.com/KosinskiLab/mosaic">Mosaic</a> is a unified, GUI-driven tool from the <a href="https://www.embl.org/groups/kosinski/">Kosinski lab</a> (EMBL Hamburg) for <strong>analyzing and modeling biomembranes from 3D structural data</strong>. It pulls the whole "segmentation → model" path into one interface: import a tomogram, clean and segment membranes, build surface meshes, localize proteins, measure geometry, and export simulation-ready systems. It's the spiritual successor to the lab's earlier <a href="https://github.com/KosinskiLab/colabseg">ColabSeg</a>.</p>
-<p>In today's workflow, Mosaic is where we take the raw membrane voxels from <a href="../membrain/">MemBrain-seg</a>, clean them up, split them into semantic components, and build the surface meshes we'll quantify in <a href="../morphometrics/">Surface Morphometrics</a>.</p>
+<p>In today's workflow, Mosaic is where we take the raw membrane voxels from <a href="../membrain/">MemBrain-seg</a>, clean them up, and split them into semantic components. We build the surface meshes themselves in <a href="../morphometrics/">Surface Morphometrics</a> — Mosaic <em>can</em> mesh too, but today we're using it just for the segmentation cleanup and separation step.</p>
 <ul>
 <li><strong>Repo:</strong> <a href="https://github.com/KosinskiLab/mosaic">https://github.com/KosinskiLab/mosaic</a></li>
 <li><strong>Docs:</strong> <a href="https://kosinskilab.github.io/mosaic/">https://kosinskilab.github.io/mosaic/</a></li>
@@ -629,9 +629,8 @@
 </div>
 <h2 id="when-to-use-it">When to use it</h2>
 <ul>
-<li>You have a membrane segmentation (e.g. from <a href="../membrain/">MemBrain-seg</a>) that needs cleanup or splitting into semantic classes.</li>
-<li>You want to go from voxel segmentation to clean surface meshes interactively, all in one place.</li>
-<li>You also want protein localization / geometry analysis / export to physical simulation down the line.</li>
+<li>You have a membrane segmentation (e.g. from <a href="../membrain/">MemBrain-seg</a>) that needs cleanup or splitting into semantic classes. <strong>(This is what we use it for today.)</strong></li>
+<li>You also want meshing, protein localization, geometry analysis, or export to physical simulation in one place down the line — Mosaic does all of these, even though today we hand meshing off to Surface Morphometrics.</li>
 </ul>
 <h2 id="setup">Setup</h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># TODO: confirm env + launch command on the workshop machines</span>
@@ -647,19 +646,18 @@ mosaic<span class="w">                       </span><span class="c1"># placehold
 <li>Import the tomogram and the MemBrain-seg membrane segmentation.</li>
 <li>Clean up the segmentation — remove stray points/voxels, fill small gaps, trim at borders.</li>
 <li>Separate the segmentation into semantic components (e.g. OMM, IMM, ER, vesicle).</li>
-<li>Build surface meshes from the cleaned components.</li>
-<li>(Optional, beyond today) localize proteins, measure geometry, and export a simulation-ready system.</li>
+<li>Export the cleaned, per-class segmentation for <a href="../morphometrics/">Surface Morphometrics</a> to mesh.</li>
+<li>(Optional, beyond today) Mosaic can also build meshes, localize proteins, measure geometry, and export a simulation-ready system.</li>
 </ol>
 <h2 id="outputs">Outputs</h2>
 <ul>
-<li>Cleaned, per-class membrane segmentations.</li>
-<li>Surface meshes ready for <a href="../morphometrics/">Surface Morphometrics</a>.</li>
+<li>Cleaned, per-class membrane segmentations — ready to be meshed in <a href="../morphometrics/">Surface Morphometrics</a>.</li>
 </ul>
 <h2 id="tips">Tips</h2>
 <ul>
 <li>Do the semantic separation here once, carefully — it pays off through the entire morphometrics pipeline.</li>
 <li>Keep class names consistent with what you'll put in the morphometrics <code>config.yml</code> (e.g. <code>OMM</code>, <code>IMM</code>).</li>
-<li>Mosaic and Surface Morphometrics overlap on geometry analysis — today we use Mosaic for cleanup + meshing and Surface Morphometrics for the curvature/distance quantification, but it's worth knowing Mosaic can do more on its own.</li>
+<li>Mosaic and Surface Morphometrics overlap on meshing and geometry analysis — today we use Mosaic only for segmentation cleanup + semantic separation, and Surface Morphometrics for the meshing and the curvature/distance quantification. It's worth knowing Mosaic can do much of this on its own.</li>
 </ul>
 
 

@@ -12,13 +12,9 @@
         <meta name="author" content="baradlab">
       
       
-        <link rel="canonical" href="https://baradlab.com/michigan_tutorial/2026/membrain/">
+        <link rel="canonical" href="https://baradlab.com/michigan_tutorial/2026/chimerax/">
       
       
-        <link rel="prev" href="../setup/">
-      
-      
-        <link rel="next" href="../mosaic/">
       
       
         
@@ -29,7 +25,7 @@
     
     
       
-        <title>MemBrain-seg - CryoET Segmentation & Modeling Tutorial</title>
+        <title>Chimerax - CryoET Segmentation & Modeling Tutorial</title>
       
     
     
@@ -79,11 +75,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#membrain-seg" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -120,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              MemBrain-seg
+              Chimerax
             
           </span>
         </div>
@@ -305,37 +296,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    MemBrain-seg
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../membrain/" class="md-nav__link">
         
   
   
@@ -351,48 +315,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Setup
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#running-membrain-seg" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Running MemBrain-seg
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -495,38 +417,6 @@
   
   
   
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Setup
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#running-membrain-seg" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Running MemBrain-seg
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -546,45 +436,9 @@
   
 
 
-<h1 id="membrain-seg">MemBrain-seg</h1>
-<p><a href="https://github.com/teamtomo/membrain-seg">MemBrain-seg</a> is a deep-learning tool for segmenting membranes in cryo-ET data. It is based on a model trained on a wide variety of cellular tomograms, and the pretrained model segments membranes with high accuracy out of the box — which makes it pretty much bulletproof as a first step for the segmentation process. As of <strong>MemBrain v2</strong> it is an end-to-end suite: <code>MemBrain-seg</code> (segmentation), <code>MemBrain-pick</code> (picking particles along membranes), and <code>MemBrain-stats</code> (statistics/morphometrics on those picks).</p>
-<p>If you want to do morphometrics, you can move quickly from a MemBrain segmentation to a mesh — though I recommend separating the membrane into individual semantic components first (we'll do that with <a href="../mosaic/">Mosaic</a>).</p>
-<div class="admonition note">
-<p class="admonition-title">Verify before the workshop — TODO</p>
-<p>Confirm this year's env name, the checkpoint path on the workshop machines, and the current <code>membrain</code> subcommand names/flags (they evolve between versions).</p>
-</div>
-<h2 id="setup">Setup</h2>
-<div class="highlight"><pre><span></span><code>conda<span class="w"> </span>activate<span class="w"> </span>membrain-seg
-</code></pre></div>
-<h2 id="running-membrain-seg">Running MemBrain-seg</h2>
-<div class="highlight"><pre><span></span><code>membrain<span class="w"> </span>segment<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--tomogram-path<span class="w"> </span>tomograms/YTC041_1_lam4_2_ts_002.mrc<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--ckpt-path<span class="w"> </span>/sw/membrain-seg/models/MemBrain_seg_v10_beta.ckpt<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--store-probabilities
-</code></pre></div>
-<p>Usually, this is all you have to do. However, sometimes the default threshold is a bit too generous and membranes merge into each other. In this case, that happens a decent bit. We will use the score map to improve the thresholding for a better result. Look at the score map and pick a threshold that separates the membranes cleanly:</p>
-<p><div class="highlight"><pre><span></span><code>3dmod<span class="w"> </span>predictions/YTC041_1_lam4_2_ts_002_scores.mrc
-</code></pre></div>
-Use the pixel view tool to examine the pixel values in the score map to determine a suitable threshold. I quite like 3.5 personally for this tomogram, but others may be quite different.</p>
-<p>Once you've decided, apply the threshold directly to the score map using the <code>membrain thresholds</code> command:</p>
-<div class="highlight"><pre><span></span><code>membrain<span class="w"> </span>thresholds<span class="w"> </span>--scoremap-path<span class="w"> </span>predictions/YTC041_1_lam4_2_ts_002_scores.mrc<span class="w"> </span>--thresholds<span class="w"> </span><span class="m">3</span>.5
-</code></pre></div>
-<p>This should be pretty permissive - if you want a different threshold, go for it! You may notice there are still a couple small bridging artifacts - these can be removed with a paintbrush in Amira, Dragonfly, or Ais, but today we're going to use geometric clustering in <a href="../mosaic/">Mosaic</a> to clean them up.</p>
-<p><strong>If you've got a good thresholded segmentation, move on to the <a href="../mosaic/">Mosaic</a> step now!</strong></p>
-<h1 id="other-membrain-stuff-we-wont-to-today">Other membrain stuff we won't to today</h1>
-<h2 id="separating-components">Separating components</h2>
-<p>For morphometrics you want each membrane as its own semantic class. I recommend doing this interactively in <a href="../mosaic/">Mosaic</a>, but you can also split connected components automatically:</p>
-<div class="highlight"><pre><span></span><code>membrain<span class="w"> </span>components<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--segmentation-path<span class="w"> </span>&lt;path-to-your-segmentation&gt;<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--connected-component-thres<span class="w"> </span><span class="m">50</span>
-</code></pre></div>
-<p>This doesn't do a great job when there are small bridging densities like this one has.</p>
-<h2 id="going-further">Going further</h2>
-<ul>
-<li><strong>MemBrain-pick</strong> — pick particles along the segmented membranes.</li>
-<li><strong>MemBrain-stats</strong> — quantitative statistics of particle distributions and membrane morphometrics.</li>
-</ul>
-<p>See the <a href="https://github.com/teamtomo/membrain-seg">MemBrain documentation</a> for current usage of these modules.</p>
+  <h1>Chimerax</h1>
+
+
 
 
 

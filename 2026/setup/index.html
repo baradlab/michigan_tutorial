@@ -341,10 +341,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#getting-connected" class="md-nav__link">
+  <a href="#getting-set-up" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Getting connected
+        Getting set up
       
     </span>
   </a>
@@ -352,10 +352,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#finding-the-data" class="md-nav__link">
+  <a href="#setting-up-your-data-structure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Finding the data
+        Setting up your data structure
       
     </span>
   </a>
@@ -374,10 +374,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#sanity-check-that-each-tool-launches" class="md-nav__link">
+  <a href="#general-tips" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Sanity-check that each tool launches
+        General tips
       
     </span>
   </a>
@@ -527,10 +527,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#getting-connected" class="md-nav__link">
+  <a href="#getting-set-up" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Getting connected
+        Getting set up
       
     </span>
   </a>
@@ -538,10 +538,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#finding-the-data" class="md-nav__link">
+  <a href="#setting-up-your-data-structure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Finding the data
+        Setting up your data structure
       
     </span>
   </a>
@@ -560,10 +560,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#sanity-check-that-each-tool-launches" class="md-nav__link">
+  <a href="#general-tips" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Sanity-check that each tool launches
+        General tips
       
     </span>
   </a>
@@ -591,54 +591,42 @@
 
 
 <h1 id="setup">Setup</h1>
-<p><strong>Grab your 3-button mice! Segmenting without one is the wooooooooorst!</strong></p>
-<p>Most of the heavy setup has already been arranged on the workshop machines. This page gets you logged in, points you at the data, and makes sure each of today's tools launches before we dive in.</p>
-<div class="admonition note">
-<p class="admonition-title">Workshop machine specifics — TODO before the workshop</p>
-<p>Fill in the exact login / scheduler / module details for this year's machines:</p>
-<ul>
-<li>How to connect (ssh host, NoMachine/X2Go, web portal, …)</li>
-<li>How environments are provided (<code>module load …</code>, <code>conda activate …</code>, or <code>micromamba run -n …</code>)</li>
-<li>The path to the shared dataset</li>
-<li>Anything that needs licensing/registration this year</li>
-</ul>
-</div>
-<h2 id="getting-connected">Getting connected</h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># TODO: connection command for this year&#39;s machines</span>
-<span class="c1"># e.g. ssh user@workshop-host</span>
+<p>Most of the heavy setup has already been arranged on the workshop machines (thanks Chris!). This page points you at the data and sets up the folder structures we'll be using for our work.</p>
+<p>We'll be working </p>
+<h2 id="getting-set-up">Getting set up</h2>
+<p>Open a new terminal and get ready for lots of different conda environments - each tool we are using will have its own environment.</p>
+<div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>conda_init.sh
+conda<span class="w"> </span>activate<span class="w"> </span>membrain-seg<span class="w"> </span><span class="c1"># Membrain is going to be used first in our workflow</span>
+module<span class="w"> </span>load<span class="w"> </span>imod<span class="w"> </span><span class="c1"># It is extremely valuable to have 3dmod ready to look at intermediate results. Always look at your data!</span>
 </code></pre></div>
-<h2 id="finding-the-data">Finding the data</h2>
-<p>I have provided some fun data for everyone to play with. Instead of working with beautiful perfect data, we will be playing with some "typical" data for a relatively new user. The reality is that better data quality will in turn make segmentations better, but you should not be afraid to try to analyze imperfect data!</p>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/scratch/segmentation_dataset<span class="w">   </span><span class="c1"># TODO: confirm this year&#39;s path</span>
+<h2 id="setting-up-your-data-structure">Setting up your data structure</h2>
+<p>We have pre-downloaded 3 tomograms and their corresponding segmentations for you to work with from EMPIAR-12534 (a dataset of cyclohexamide-treated yeast cells with stalled co-translating ribosomes). I am going to walk through a single tomogram for the segmentation steps, but you can do the other two as well if you pick up the clustering quickly. Every step except mesh refinement is fast enough to comfortably accomodate all three tomograms.</p>
+<p>The data and segmentations are available in the <code>/data/EMPIAR-12534</code> directory.</p>
+<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>-p<span class="w"> </span>/work/participant/segmentation_dataset
+<span class="nb">cd</span><span class="w"> </span>/work/participant/segmentation_dataset
+mkdir<span class="w"> </span>tomograms
+mkdir<span class="w"> </span>segmentations
+mkdir<span class="w"> </span>morphometrics
+ln<span class="w"> </span>-s<span class="w"> </span>/work/data/EMPIAR-12534/data/Reconstructed_tomograms/YTC041_1/YTC041_1_lam4_2_ts_002.mrc_9.98Apx.mrc<span class="w"> </span>/work/participant/segmentation_dataset/tomograms/YTC041_1_lam4_2_ts_002.mrc
 </code></pre></div>
-<p>Take a look around in here. Feel free to open the tomogram with <code>3dmod</code> and get a sense of what is inside (the deconvolved/denoised version is often easier to read).</p>
-<div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>imod<span class="w">   </span><span class="c1"># TODO: confirm</span>
-3dmod<span class="w"> </span>/scratch/segmentation_dataset/&lt;tomogram&gt;.mrc
+<p>The tomogram is now available in the <code>tomograms</code> directory. If you want, you can link the other two tomograms at the same time - every processing step will take 3 times as long, but it may be interesting to see stats for multiple tomograms.</p>
+<p>I recommend you open the tomogram with <code>3dmod</code> and get a sense of what is inside (the deconvolved/denoised version is often easier to read).</p>
+<div class="highlight"><pre><span></span><code>3dmod<span class="w"> </span>/work/participant/segmentation_dataset/tomograms/YTC041_1_lam4_2_ts_002.mrc
 </code></pre></div>
+<p>There is a lot of interesting structure inside the tomogram, including membranes and other cellular components. There are a couple of microtubules, a bit of nucleus, a mitochondrion, the plasma membrane, and some ribosomes. We'll ignore the microtubules today, but it may be fun at the end (if you want to make a cool figure) to run this tomogram through easymode and see if you can grab some of the structures of interest. </p>
 <h2 id="what-were-going-to-do-today">What we're going to do today</h2>
-<p>We'll follow a single membrane through the whole pipeline:</p>
+<p>We'll follow a single tomogram through the whole pipeline:</p>
 <ol>
 <li>Use <strong><a href="../membrain/">MemBrain-seg</a></strong> to segment the membranes in the tomogram with a pretrained model.</li>
 <li>Use <strong><a href="../mosaic/">Mosaic</a></strong> to clean up the membrane segmentation and split it into semantic components.</li>
-<li>Use <strong><a href="../morphometrics/">Surface Morphometrics</a></strong> to build surface meshes from the cleaned segmentation and quantify membrane ultrastructure (curvature, distances, orientation).</li>
+<li>Use <strong><a href="../morphometrics/">Surface Morphometrics</a></strong> to build surface meshes from the cleaned segmentation and quantify membrane ultrastructure (curvature, distances, orientation, thickness).</li>
 <li>Use <strong><a href="../surforama/">Surforama</a></strong> to explore tomogram densities on the membrane surfaces and pick oriented membrane-associated proteins.</li>
+<li>(Bonus) If there's time, use ArtiaX and Chimera to visualize some ribosome-mitochondria interactions.</li>
 </ol>
-<h2 id="sanity-check-that-each-tool-launches">Sanity-check that each tool launches</h2>
-<p>Raise your hand and get my attention if any of these don't come up cleanly — better to sort it out now than mid-exercise!</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># MemBrain-seg</span>
-conda<span class="w"> </span>activate<span class="w"> </span>membrain-seg<span class="w">      </span><span class="c1"># TODO: confirm env name</span>
-membrain<span class="w"> </span>--help
-
-<span class="c1"># Mosaic</span>
-<span class="c1"># TODO: confirm activation + launch command</span>
-
-<span class="c1"># Surface morphometrics</span>
-conda<span class="w"> </span>activate<span class="w"> </span>morphometrics<span class="w">     </span><span class="c1"># TODO: confirm env name</span>
-
-<span class="c1"># Surforama (napari plugin)</span>
-<span class="c1"># TODO: confirm activation</span>
-napari
-</code></pre></div>
+<h2 id="general-tips">General tips</h2>
+<p>If something breaks, go ahead and raise your hand and ask for help. Especially for steps that involve automated parsing, sometimes typos a file name or other minor things can be very hard to diagnose on your own!</p>
+<p>Don't be afraid to experiment with settings - most of these tools have more than one way to achieve the same result, and different parameters may work better for your data.</p>
+<h1 id="when-youre-done-you-can-move-to-membrain-seg">When you're done, you can move to <a href="../membrain/">MemBrain-seg</a>!</h1>
 
 
 

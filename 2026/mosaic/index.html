@@ -395,17 +395,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#when-to-use-it" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        When to use it
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#setup" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -538,17 +527,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#when-to-use-it" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        When to use it
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#setup" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -613,41 +591,35 @@
 
 
 <h1 id="mosaic">Mosaic</h1>
-<p><a href="https://github.com/KosinskiLab/mosaic">Mosaic</a> is a unified, GUI-driven tool from the <a href="https://www.embl.org/groups/kosinski/">Kosinski lab</a> (EMBL Hamburg) for <strong>analyzing and modeling biomembranes from 3D structural data</strong>. It pulls the whole "segmentation → model" path into one interface: import a tomogram, clean and segment membranes, build surface meshes, localize proteins, measure geometry, and export simulation-ready systems. It's the spiritual successor to the lab's earlier <a href="https://github.com/KosinskiLab/colabseg">ColabSeg</a>.</p>
-<p>In today's workflow, Mosaic is where we take the raw membrane voxels from <a href="../membrain/">MemBrain-seg</a>, clean them up, and split them into semantic components. We build the surface meshes themselves in <a href="../morphometrics/">Surface Morphometrics</a> — Mosaic <em>can</em> mesh too, but today we're using it just for the segmentation cleanup and separation step.</p>
+<div class="admonition info">
+<p class="admonition-title">mosaic mouse</p>
+<p>If you have a 3-button mouse, now is the time to use it! Mosaic is a very mouse-driven tool.</p>
+</div>
+<p><a href="https://github.com/KosinskiLab/mosaic">Mosaic</a> is a unified, GUI-driven tool from the <a href="https://www.embl.org/groups/kosinski/">Kosinski lab</a> (EMBL Hamburg) for <strong>analyzing and modeling biomembranes from 3D structural data</strong>. It pulls the whole "segmentation → model" path into one interface: import a tomogram, clean and segment membranes, build surface meshes, localize proteins, measure geometry, and export simulation-ready systems. It's the spiritual successor to the lab's earlier <a href="https://github.com/KosinskiLab/colabseg">ColabSeg</a>. It is a really great exploratory tool, especially for interactive membrane analysis and modeling. We're going to use a small subset of its capabilities today, but its well worth playing around on your own with it!</p>
+<p>In today's workflow, Mosaic is where we take the raw membrane voxels from <a href="../membrain/">MemBrain-seg</a>, clean them up, and split them into semantic components. We build the surface meshes themselves in <a href="../morphometrics/">Surface Morphometrics</a> — Mosaic <em>can</em> mesh too, but today we're using it just for the segmentation cleanup and separation step. We use morphometrics for later steps because it provides more robust quantifications and scales more simply to large numbers of tomograms, but we are actively going back and forth with Mosaic in my lab to play with segmentation and particle picking utilities.</p>
 <ul>
 <li><strong>Repo:</strong> <a href="https://github.com/KosinskiLab/mosaic">https://github.com/KosinskiLab/mosaic</a></li>
 <li><strong>Docs:</strong> <a href="https://kosinskilab.github.io/mosaic/">https://kosinskilab.github.io/mosaic/</a></li>
 </ul>
-<div class="admonition note">
-<p class="admonition-title">Confirm before the workshop — TODO</p>
-<p>The description and links above are correct, but please confirm the workshop-machine specifics and the exact step names before publishing:</p>
-<ul>
-<li><strong>Install / launch</strong> — env name and launch command on this year's machines.</li>
-<li><strong>Exact menu/operation names</strong> for the steps under "Workflow" below (Mosaic evolves quickly).</li>
-</ul>
-</div>
-<h2 id="when-to-use-it">When to use it</h2>
-<ul>
-<li>You have a membrane segmentation (e.g. from <a href="../membrain/">MemBrain-seg</a>) that needs cleanup or splitting into semantic classes. <strong>(This is what we use it for today.)</strong></li>
-<li>You also want meshing, protein localization, geometry analysis, or export to physical simulation in one place down the line — Mosaic does all of these, even though today we hand meshing off to Surface Morphometrics.</li>
-</ul>
 <h2 id="setup">Setup</h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># TODO: confirm env + launch command on the workshop machines</span>
-conda<span class="w"> </span>activate<span class="w"> </span>mosaic<span class="w">        </span><span class="c1"># placeholder</span>
-mosaic<span class="w">                       </span><span class="c1"># placeholder entrypoint</span>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/work/participant/segmentation_dataset/predictions
+conda<span class="w"> </span>activate<span class="w"> </span>mosaic<span class="w">        </span>
+mosaic<span class="w">                       </span>
 </code></pre></div>
-<p>See the <a href="https://kosinskilab.github.io/mosaic/">installation docs</a> for the canonical instructions.</p>
 <h2 id="workflow">Workflow</h2>
-<div class="admonition note">
-<p class="admonition-title">TODO: fill in concrete steps from the workshop machines</p>
-</div>
+<p>There are currently, by my count, 6 distinct membranes in this data: The outer membrane (OMM), inner membrane (IMM), endoplasmic reticulum (ER), vesicles, plasma membrane (PM), and the nuclear membrane (NM). We often split the nuclear membrane into INM and ONM for convenience, as they have distinct properties and functions even though they are part of the same bilayer. Microtubules have also been segmented as membrane - they are often picked up by membrane networks.</p>
+<p>For the sake of this tutorial, I am going to remove the microtubules and vesicles (since they are small, high curvature, and not very complete in this tomogram). If you want to keep vesicles in the dataset, you should feel free to keep them - I just know they are a bit less interesting in this dataset because they are small and incomplete. </p>
+<p>If you want to analyze all three volumes, you may want to remove additional membranes beyond these - I'd recommend keeping the IMM, OMM, INM, and ONM, since these have some interesting metrics. At the very least, keep the mitochondria! This is especially true because one of the other tomograms has a bit of vacuole, which isn't even in this segmentation. </p>
 <ol>
-<li>Import the tomogram and the MemBrain-seg membrane segmentation.</li>
-<li>Clean up the segmentation — remove stray points/voxels, fill small gaps, trim at borders.</li>
-<li>Separate the segmentation into semantic components (e.g. OMM, IMM, ER, vesicle).</li>
-<li>Export the cleaned, per-class segmentation for <a href="../morphometrics/">Surface Morphometrics</a> to mesh.</li>
-<li>(Optional, beyond today) Mosaic can also build meshes, localize proteins, measure geometry, and export a simulation-ready system.</li>
+<li>Import the thresholded membrane segmentation from MemBrain-seg. Remember to check "Segmentation Volume" during the opening dialogue!</li>
+<li>Perform connected component clustering to break up components. <strong>This will make a lot of components, and the software will be a little slow to respond. We'll start removing components quickly and it will get snappy again!</strong></li>
+<li>Using the "select" dialogue, select all components smaller than log 3.5 and remove them. You can adjust this threshold as needed, but its a quick way to get rid of junk. You can also do this ahead of time in membrain in the future once you know the number you like.</li>
+<li>Using the "Pick Objects" tool (Shift-E), select and remove the microtubules any any other unwanted components.</li>
+<li>Step through the remaining clusters and merge the ER and the separated pieces of IMM, and label the ER, INM, ONM, and PM. </li>
+<li>You'll see that the OMM is still connected to a large piece of IMM! To solve this, we'll use Leiden Clustering. Select the OMM cluster (for me, it was cluster 7),  then run "Clustering -&gt; Leiden" with the default (-7.3) threshold.</li>
+<li>Wait for both jobs to complete (this may take a couple minutes; one goes fast), then finish merging and relabeling the IMM and OMM.</li>
+<li>Reorder the components to ensure the correct semantic labels are applied. Today, I will be using the order IMM, OMM, ER, PM, INM, ONM. If you did more or fewer components, adjust the order accordingly - this ordering is needed for the next step!</li>
+<li>Select all labels, then right click and export all as a single volume in the segmentations folder named "YTC041_1_lam4_2_ts_002_labels.mrc". Filename is somewhat important here - surface morphometrics expects the beginning of both the tomogram and the segmentation to match. There are workarounds we can talk about if you don't think you can follow this convention; let me know.</li>
 </ol>
 <h2 id="outputs">Outputs</h2>
 <ul>
@@ -657,7 +629,8 @@ mosaic<span class="w">                       </span><span class="c1"># placehold
 <ul>
 <li>Do the semantic separation here once, carefully — it pays off through the entire morphometrics pipeline.</li>
 <li>Keep class names consistent with what you'll put in the morphometrics <code>config.yml</code> (e.g. <code>OMM</code>, <code>IMM</code>).</li>
-<li>Mosaic and Surface Morphometrics overlap on meshing and geometry analysis — today we use Mosaic only for segmentation cleanup + semantic separation, and Surface Morphometrics for the meshing and the curvature/distance quantification. It's worth knowing Mosaic can do much of this on its own.</li>
+<li>For a given dataset, always order your components in a consistent manner. This ensures that the semantic labels are applied correctly and makes the data easier to work with. I made <a href="https://github.com/teamtomo/qvox">qvox</a> a while back to deal with issues of inconsistent ordering and other segmentation issues, and can provide scripts for reordering if needed.</li>
+<li>Mosaic and Surface Morphometrics overlap on meshing and geometry analysis — today we use Mosaic only for segmentation cleanup + semantic separation, and Surface Morphometrics for the meshing and the curvature/distance quantification. It's worth knowing Mosaic has its own opinionated approach to these tasks, that may be useful for some of your applications!</li>
 </ul>
 
 

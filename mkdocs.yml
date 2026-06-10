@@ -16,6 +16,7 @@ nav:
   - MemBrain-seg: membrain.md
   - Mosaic: mosaic.md
   - Surface Morphometrics: morphometrics.md
+  - ChimeraX: chimerax.md
   - Surforama: surforama.md
 
 theme:

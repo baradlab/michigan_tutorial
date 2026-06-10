@@ -15,10 +15,9 @@ It pairs naturally with the surfaces we build in [Surface Morphometrics](morphom
 * You want oriented particles exported to **RELION STAR** files to feed subtomogram averaging.
 
 ## Setup
-We need to make a surface mesh from our tomogram data, and leave it at the current scale, since surforama expects a nm scale surface. Unfortunately, I discovered a bug with obj scaling that only shows up in certain cases - including these workstations! To deal with that, grab the obj file from here:
+Unfortunately, I introduced a scaling bug in my code this week, so you won't be able to make an obj scaled correctly for Surforama. Whoops! Instead, go ahead and grab [surforama.obj](static/surforama.obj)
 
-
-We also want to 
+For surforama, its also helpful to have some deconvolution (or denoising!) done on your data:
 ```bash
 module load imod
 mtffilter tomograms/YTC041_1_lam4_2_ts_002.mrc -dec 0.5 -def 5 YTC041_1_lam4_2_ts_002_dec.mrc
@@ -26,7 +25,7 @@ mtffilter tomograms/YTC041_1_lam4_2_ts_002.mrc -dec 0.5 -def 5 YTC041_1_lam4_2_t
 
 ```bash
 conda activate surforama    
-surforama --image-path YTC041_1_lam4_2_ts_002_dec.mrc --mesh-path morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9_curvedness_VV.obj
+surforama --image-path YTC041_1_lam4_2_ts_002_dec.mrc --mesh-path surforama.obj
 ```
 
 Try changing the parameters of the offset and the thickness to project - you should be able to find some dark spots at an offset around 5-8 that correspond to membrane-associated ribosomes! 

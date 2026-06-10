@@ -15,6 +15,10 @@
         <link rel="canonical" href="https://baradlab.com/michigan_tutorial/2026/chimerax/">
       
       
+        <link rel="prev" href="../morphometrics/">
+      
+      
+        <link rel="next" href="../surforama/">
       
       
         
@@ -25,7 +29,7 @@
     
     
       
-        <title>Chimerax - CryoET Segmentation & Modeling Tutorial</title>
+        <title>ChimeraX - CryoET Segmentation & Modeling Tutorial</title>
       
     
     
@@ -75,6 +79,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#chimerax-and-artiax-visualization" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -111,7 +120,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Chimerax
+              ChimeraX
             
           </span>
         </div>
@@ -377,6 +386,102 @@
       
   
   
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ChimeraX
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ChimeraX
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#making-the-right-objmtl-combo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Making the right obj/mtl combo:
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
   
   
     <li class="md-nav__item">
@@ -417,6 +522,38 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#making-the-right-objmtl-combo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Making the right obj/mtl combo:
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -436,9 +573,19 @@
   
 
 
-  <h1>Chimerax</h1>
-
-
+<h1 id="chimerax-and-artiax-visualization">ChimeraX (and ArtiaX) Visualization</h1>
+<p>Using <a href="https://www.cgl.ucsf.edu/chimerax/">ChimeraX</a> with the <a href="https://github.com/FrangakisLab/ArtiaX">ArtiaX Plugin</a> and our quantified surfaces, we will make a (hopefully attractive) visualization of our data.</p>
+<h2 id="setup">Setup</h2>
+<ol>
+<li>Start ChimeraX with <code>module load chimerax &amp;&amp; chimerax</code></li>
+<li>Install ArtiaX: Tools -&gt; More tools to get to the toolshed, then search and install ArtiaX. Restart ChimeraX to activate ArtiaX! </li>
+<li>Download the star file: <a href="../static/clean_ribosomes.star">clean_ribosomes.star</a>. ArtiaX has a (new as of a couple weeks ago) open bug with starfiles with strings in it, so I am just providing a clean starfile for you. I made it with the starfile python repository </li>
+</ol>
+<h2 id="making-the-right-objmtl-combo">Making the right obj/mtl combo:</h2>
+<p>Here, we'll export an obj file with a specific color map using morphometrics:</p>
+<div class="highlight"><pre><span></span><code>morphometrics<span class="w"> </span>export_obj<span class="w"> </span>--feature<span class="w"> </span>IMM_dist<span class="w"> </span>config.yml<span class="w"> </span>morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.vtp
+</code></pre></div>
+<p>This will make an obj file with an associated mtl (material) file, which records color for the obj in a way that lots of different softwares read.</p>
 
 
 

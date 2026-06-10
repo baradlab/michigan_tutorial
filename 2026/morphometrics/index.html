@@ -18,7 +18,7 @@
         <link rel="prev" href="../mosaic/">
       
       
-        <link rel="next" href="../surforama/">
+        <link rel="next" href="../chimerax/">
       
       
         
@@ -574,6 +574,33 @@
   
   
     <li class="md-nav__item">
+      <a href="../chimerax/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ChimeraX
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../surforama/" class="md-nav__link">
         
   
@@ -815,7 +842,7 @@ morphometrics<span class="w"> </span>new_config<span class="w">                 
 <li>Under <code>curvature_measurements</code>: set <code>radius_hit: 9</code> (the radius of the smallest feature of interest, in nm) and <code>exclude_borders: 0</code>.</li>
 <li>Under <code>distance_and_orientation_measurements</code>: list <code>intra: [IMM, OMM, ER, PM, INM, ONM]</code> and set <code>inter: {OMM: [IMM, ER, PM, ONM], ER:[PM], ONM[INM]}</code>. These are all the "interesting" interactions as far as I can tell.</li>
 <li>Under <code>thickness_measurements</code>: set <code>average_radius: 20</code> (the radius for averaging the bilayer) and set it up for all your surfaces. Higher radius values will average over a larger area, which can be useful for smoothing out noise but may also obscure fine details.</li>
-<li>Under <code>mesh_refinement</code>: set iterations to <code>4</code>, <code>damping_factor: 0.95</code>, and <code>xcorr_iterations: [1,2,3]</code>. This will use the faster <code>xcorr</code> mode, which locally sharpens membrane positions, for all but the final iteration, which will globally center the membrane in the bilayer. Because we are taking one centering step, we will raise the damping factor to 0.95. Normally, we'd do 3 iterations of the dual gaussian fitting mode before calling it good.</li>
+<li>Under <code>mesh_refinement</code>: set <code>iterations</code> to <code>3</code>, <code>damping_factor: 0.95</code>, <code>xcorr_iterations: [1,2,3]</code>, and <code>convergence_threshold</code> to <code>0</code>. This will use the faster <code>xcorr</code> mode, which locally sharpens membrane positions, for all of the iterations, rather than doing the much slower global positioning approach using a dual gaussian bilayer fit. For this curvature data, your global fits are probably very good, so this shouldn't be a big deal - but in the future, you may want to incorporate some dual gaussian steps at the end. I usually use 6 iterations, with the first 3 being xcorr and the rest being dual gaussian. This takes a long time, so I incorporate a convergence criteria (which we disable today) for when the meshes stop moving.</li>
 </ul>
 </li>
 </ol>

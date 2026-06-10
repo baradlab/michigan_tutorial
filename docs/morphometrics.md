@@ -7,123 +7,153 @@ Surface morphometrics is a toolbox I developed during my postdoc to better under
 
 Today we will scratch the surface with a single tomogram, but one of the most valuable aspects of building models and making quantifications is that it becomes possible to assess statistical significance by comparing quantifications across many tomograms in different cells and conditions. This is a powerful way to move from qualitative phenomenology about cellular remodeling to robust quantitative understanding of the underlying biology. With one tomogram, we're mostly still doing phenomenology.
 
-!!! tip "Newer helper tools (2026)"
-    The core pipeline below is unchanged and battle-tested, but my lab now leans on a couple of small companion packages that make the segmentation-wrangling steps cleaner:
+!!! warning "New since 2024: one `morphometrics` command"
+    The toolkit is now an installable package driven by a **single `morphometrics` command** with subcommands, instead of running `python <script>.py` directly. The old `python script.py …` calls still work for now via deprecation shims (they warn and forward), but please use the new commands. Two config keys were also renamed: `data_dir` → `seg_dir` and `max_triangles` → `simplify_max_triangles`. There are also two **new** capabilities since the workshop you may have seen before: optional **mesh refinement** (recentering vertices on the bilayer) and **membrane thickness** measurement.
 
-    * [`ETSegTools`](https://github.com/bbarad/ETSegTools) — tools for manipulating multilabel cryo-ET segmentations (relabeling, splitting, combining classes) before meshing. Handy for getting the right `segmentation_values` per class.
-    * [`qvox`](https://github.com/teamtomo/qvox) — fast operations on quantized (integer) voxel arrays.
 
-    Combined with [Mosaic](mosaic.md) for interactive cleanup, these replace the Dragonfly/Amira component-separation step from the 2024 edition.
-
-!!! note "Confirm before the workshop — TODO"
-    Confirm this year's env name and dataset paths, and decide which segmentation we feed in (MemBrain + Mosaic output vs. a precalculated label file). Update the `module load` / `conda activate` lines below to match the workshop machines.
-
-## Setup
-1. Activate your conda environment and move to the morpho_run folder:
+## Step 0: Set up the environment and the config file.
+1. Activate the conda environment and check the install:
 ```bash
-conda activate morphometrics                       # TODO: confirm env name
-cd /scratch/segmentation_dataset/morpho_run        # TODO: confirm path
+conda activate morphometrics                 # TODO: confirm env name
+morphometrics --help                         # should list the pipeline subcommands
 ```
-2. Edit the `config.yml` file for our project's needs. I prefer Visual Studio Code for this!
-    * Set the `data_folder` to the folder containing your label file (`/scratch/segmentation_dataset/morpho_run/datadir`)
-    * Set the `output_folder` to the folder where you want the output files to be saved (`/scratch/segmentation_dataset/morpho_run/workdir`)
-    * For `segmentation_values`, use `-127` for the OMM and `-126` for the IMM. (If you're using your own Mosaic output, set these to match your class labels — `ETSegTools` can help you check/relabel them.)
-    * Set the `max_triangles` to 50,000 to speed up computation - this will reduce the quality of the final surfaces so don't do this when you are running at home!
-    * Set the `num_cores` to 16.
-    * Set the `radius_hit` to 10.
-    * Set `exclude_borders` to 1.
-    * For `intra`, provide `IMM` and `OMM`
-    * For `inter`, provide `IMM`: `OMM`
-
-
-## Example data
-
-There is example data and a config available in the `morpho_run` folder. This is `TE3_labels.mrc`, the same tomogram you'll be processing in the rest of the tutorial. You should check some details about it! You can also compare it to the tomogram itself.
+2. Move to the working folder for our project and generate a starter config:
 ```bash
-module load imod                                   # TODO: confirm
-header /scratch/segmentation_dataset/morpho_run/datadir/TE3_labels.mrc
-header /scratch/segmentation_dataset/TE3_tomo.mrc
-3dmod /scratch/segmentation_dataset/morpho_run/datadir/TE3_labels.mrc
-3dmod /scratch/segmentation_dataset/TE3_tomo.mrc
+cd /scratch/segmentation_dataset/morpho_run  # TODO: confirm path
+morphometrics new_config                     # writes a fully-commented config.yml
 ```
+3. Edit `config.yml` for our project's needs. I prefer Visual Studio Code for this! The key things to set:
+    * `seg_dir: ./segmentations/` — folder containing your **segmentation** (label) MRC files.
+    * `tomo_dir: ./tomograms/` — folder containing the **raw tomogram** MRC files (needed for thickness/refinement; each raw tomogram must share the basename of its segmentation).
+    * `work_dir: ./morphometrics/` — folder for output files; `exp_name` is not currently used in this release.
+    * `segmentation_values` — the label-value → name mapping for your data. My mapping is as follows:
+      ```yaml
+      segmentation_values:
+        IMM: 1     # TODO: set to match our segmentation
+        OMM: 2
+        ER: 3
+        PM: 4
+        INM: 5
+        ONM: 6
+      ```
+    * `cores` — set to `24` to speed up computation today.
+    * Under `surface_generation`: leave `isotropic_remesh: true` and set `target_area: 1.5`. Generally, we recommend working with `target_area` around 1 nm² for good near-equilateral triangles (bigger = faster/coarser). Today, we're working a bit bigger to make sure the computation is fast, but finer meshes do better with thickness measurement and scanning.
+    * Under `curvature_measurements`: set `radius_hit: 9` (the radius of the smallest feature of interest, in nm) and `exclude_borders: 0`.
+    * Under `distance_and_orientation_measurements`: list `intra: [IMM, OMM, ER, PM, INM, ONM]` and set `inter: {OMM: [IMM, ER, PM, ONM], ER:[PM], ONM[INM]}`. These are all the "interesting" interactions as far as I can tell.
+    * Under `thickness_measurements`: set `average_radius: 20` (the radius for averaging the bilayer) and set it up for all your surfaces. Higher radius values will average over a larger area, which can be useful for smoothing out noise but may also obscure fine details.
+    * Under `mesh_refinement`: set iterations to `4`, `damping_factor: 0.95`, and `xcorr_iterations: [1,2,3]`. This will use the faster `xcorr` mode, which locally sharpens membrane positions, for all but the final iteration, which will globally center the membrane in the bilayer. Because we are taking one centering step, we will raise the damping factor to 0.95. Normally, we'd do 3 iterations of the dual gaussian fitting mode before calling it good.
 
-## Processing your data
-### Interactive mesh generation
-We are going to do semi-interactive mesh generation in Meshlab to teach you how the sausage is made, but there is also a fully configurable pipeline (`python ../surface_morphometrics/segmentation_to_meshes.py config.yml`) that will do the whole thing for you.
+!!! tip "When you go back to your home institute, you can benchmark with example data before trying with yours"
+    `morphometrics fetch_example` downloads a small cropped tomogram + segmentation from Zenodo into `surface_morphometrics_example/` (with `tomograms/`, `segmentations/`, and a ready `config.yml`, IMM=1/OMM=2). Great for a dry run of the whole pipeline including thickness.
 
-1. Prepare the xyz point cloud files to make new meshes:
+
+## Step 1: Make Surface Meshes (Run time ~6 minutes on my machine) 
+Each step reads `config.yml` and writes into `work_dir`; every command prints a hint for the next one. Run them in order:
+
 ```bash
-cd /scratch/segmentation_dataset/morpho_run
-python ../surface_morphometrics/mrc2xyz.py -l -127 datadir/TE3_labels.mrc workdir/TE3_OMM.xyz
-python ../surface_morphometrics/mrc2xyz.py -l -126 datadir/TE3_labels.mrc workdir/TE3_IMM.xyz
+# 1. Segmentations -> surface meshes (screened Poisson + remeshing)
+morphometrics make_meshes config.yml
 ```
-2. Launch `Meshlab`
+This step will make meshes with mostly isotropic triangles of a target area of 1.5 nm². It outputs in two formats: a `ply` file that you can visualize and modify in meshlab, and a `.surface.vtp` file that is used for further processing and can be visualized in paraview. For now, lets take a look at your files in meshlab:
+
 ```bash
-module load meshlab                                # TODO: confirm
-meshlab
+module load meshlab
+meshlab morphometrics/*.ply
 ```
-3. For each mesh file:
-    1. Filters->Normals, Curvatures, and Orientation->Compute Normals for Point Sets
-    2. Filters->Remeshing, Simplification, and Reconstruction->Screened Poisson Surface Reconstruction
-    3. Filters->Selection->Select Faces by Vertex Quality
-    4. Filters->Selection->Delete Selected Faces
-    5. Filters->Remeshing, Simplification, and Reconstruction->Quadric Edge Collapse Decimation
-    6. File->Export Mesh As...->TE3_OMM.ply
+You can play around with the visualization here - try turning on the triangle edge display, or coloring by curvature. If we have time, I will walk through these, but if not we may move on quickly. Generally, you want to make sure you've had eyes on EVERY surface for at least a moment before proceeding through the rest of the pipeline - garbage in, garbage out, after all!
 
-### Pipelined Processing Steps
-0. If you wanted to make the meshes automatically: `python ../surface_morphometrics/segmentation_to_meshes.py config.yml`. We aren't doing this today because I think it's more fun to do by hand. If you have 30 tomograms each with 3-5 labels, it will no longer be fun.
-1. Convert the ply files to vtp files: `python ../surface_morphometrics/ply2vtp.py config.yml TE3_OMM.ply TE3_OMM.surface.vtp`. Do this again for IMM.
-2. Run pycurv for each surface (normally, this is best run in parallel on a cluster):
-    `python ../surface_morphometrics/run_pycurv.py config.yml TE3_OMM.surface.vtp`. Do this again for IMM (it will take a long time for IMM!)
-    You may see warnings about the curvature, this is normal and you do not need to worry.
-    We may run into memory constraints - if you do, you can reduce the number of triangles in the surface by setting `max_triangles` to a lower number in the config file. This will reduce the quality of the final surfaces, but will make the computation faster and lower-memory.
-3. Measure intra- and inter-surface distances and orientations (also best to run this one in parallel for each original segmentation): `python ../surface_morphometrics/measure_distances_orientations.py config.yml`
-4. Don't do this today: Combine the results of the pycurv analysis into aggregate Experiments and generate statistics and plots. This requires some manual coding using the Experiment class and its associated methods in `morphometrics_stats.py`. Everything is roughly organized around working with the CSVs in pandas dataframes. Running `morphometrics_stats.py` as a script with the config file and a filename will output a pickle file with an assembled "experiment" object for all the tomos in the data folder. Reusing a pickle file will make your life way easier if you have dozens of tomograms to work with, but it doesn't save too much time with just the example data...
+## Step 2: Building a graph and measuring curvature robustly with `pycurv`. (Also ran in ~6 minutes on my machine)
+In this step, we will use [pycurv](https://github.com/kalemaria/pycurv) to build a graph and measure curvature using a vector voting algorithm. These graphs are what we use for all other operations going forward. Notably, the upstream pycurv software is great but quite slow; morphometrics uses a fork that has been extensively vectorized to deliver many-fold performance improvements. 
 
-Just in case you have problems running things fast (I don't have a great sense of how long this will take on these machines), I have provided usable output files for the downstream analysis you might want to check out. You can find them in the `morpho_run/workdir` folder.
+```bash
+morphometrics curvature config.yml
+```
 
+The important output files from this step are the graph files (`.AVV_rh9.gt`) and the quantified surface files (`.AVV_rh9.vtp`). The graph can't be easily visualized, but the quantified surfaces can be loaded into paraview for analysis.
 
-## Inspecting Results
-### Visualizing the surfaces
-1. Load the surfaces in Paraview:
-    * Open Paraview
-    * File -> Open -> TE3_OMM.surface.vtp
-    * File -> Open -> TE3_IMM.surface.vtp
-    * Make each visible
-    * Color by `curvedness_vv` to see the curvature of the surface
-    * Color by `OMM_dist` (or `IMM_dist`) to see the distance from the IMM to the OMM or vice-versa
-2. Adjust color scales to see the features you are interested in. Add and edit the scalebar.
-3. Adjust the background, turn on ambient occlusion, and make the surfaces look nice for a screenshot.
-4. Take some nice pictures!
+```bash
+module load paraview
+paraview morphometrics/YTC041_1_lam4_2_ts_002_labels_IMM.AVV_rh9.vtp
+```
 
-### Generating some basic statistics and plots
-* `python ../surface_morphometrics/single_file_histogram.py workdir/TE3_IMM.AVV_rh8.csv -n curvedness_vv` will generate an area-weighted histogram for a feature of interest in a single tomogram. I am using a variant of this script to respond to reviews asking for more per-tomogram visualizations!
-* `python ../surface_morphometrics/single_file_2d.py workdir/TE3_IMM.AVV_rh8.csv -n1 curvedness_vv -n2 OMM_dist` will generate a 2D histogram for 2 features of interest for a single surface.
+Try changing the visualization to "curvedness_VV" to see the curvature of the surface. Play around with color map settings and lighting. Ambient occlusion is a huge benefit for making nice figures, and changing the background to white is important for publication-quality images.
+
+## Step 3: Mesh Refinement (Normally optional in the workflow, ~35 minutes for 6 surfaces from one tomogram today)
+New since 2024. After `pycurv` and **before** distances/thickness, `morphometrics refine_mesh config.yml` recenters surface vertices onto the true bilayer center by sampling the raw tomogram density along surface normals. It improves every surface, but it is **by far the slowest step** (it re-runs pycurv internally each iteration), so be prepared for a longer than usual wait. We are doing a quicker version of it today that should be faster than normal.
+
+```bash
+export OMP_NUM_THREADS=1                             # This is a fix for a linux bug I ran into here at the workshop! 
+morphometrics refine_mesh config.yml                 # writes *_refined_iter*.surface.vtp + convergence plots
+morphometrics accept_refinement config.yml <step>    # promote the chosen iteration (use --dry-run to preview)
+```
+Try loading all of your refinement results into paraview to see the improvements. You can also look at the convergence plots to understand the refinement process. Usually you want to select the final step for moving forward, but you may not always want to! Make sure to check a surface in paraview before accepting it blindly! Focus in particular on ONM and INM - those should improve significantly.
 
 
+## Step 4: Distance and Thickness Measurement (Approximately 5 minutes for one tomogram)
+The `morphometrics distances_orientations config.yml` command calculates the inter-membrane distance and orientation of the surfaces. This is one of the most useful steps for understanding membrane organization in situ, as membrane-membrane contact sites are a key regulatory feature across many biological processes.
 
-## Running individual steps without pipelining
-Individual steps are available as click commands in the terminal, and as functions:
+```bash
+morphometrics distances_orientations config.yml
+```
 
-1. Robust Mesh Generation
-    1. `mrc2xyz.py` to prepare point clouds from voxel segmentation
-    2. `xyz2ply.py` to perform screened poisson reconstruction and mask the surface
-    3. `ply2vtp.py` to convert ply files to vtp files ready for pycurv
-2. Surface Morphology Extraction
-    1. `curvature.py` to run pycurv in an organized way on pregenerated surfaces
-    2. `intradistance_verticality.py` to generate distance metrics and verticality measurements within a surface.
-    3. `interdistance_orientation.py` to generate distance metrics and orientation measurements between surfaces.
-    4. Outputs: gt graphs for further analysis, vtp files for paraview visualization, and CSV files for pandas-based plotting and statistics
-3. Morphometric Quantification - there is no click function for this, as the questions answered depend on the biological system of interest!
-    1. `morphometrics_stats.py` is a set of classes and functions to generate graphs and statistics with pandas.
-    2. [Paraview](https://www.paraview.org/) for 3D surface mapping of quantifications.
+Feel free to inspect your output files! Always be looking for interesting or unexpected patterns. Your eyes and brain make for fantastic neural nets!
 
-## Summary of File Types:
-* Files with `.xyz` extension are point clouds converted, in nm or angstrom scale. This is a flat text file with `X Y Z` coordinates in each line.
-* Files with `.ply` extension are the surface meshes (in a binary format), which will be scaled in nm or angstrom scale, and work in many different softwares, including [Meshlab](https://www.meshlab.net/).
-* Files with `surface.vtp` extension are the same surface meshes in the [VTK](https://vtk.org/) format.
-    * The `.surface.vtp` files are a less cross-compatible format, so you can't use them with as many types of software, but they are able to store all the fun quantifications you'll do! [Paraview](https://www.paraview.org/) or [pyvista](https://docs.pyvista.org/) can load this format. This is the format pycurv reads to build graphs.
-* Files with `.gt` extension are triangle graph files using the `graph-tool` python toolkit. These graphs enable rapid neighbor-wise operations such as tensor voting, but are not especially useful for manual inspection.
-* Files with `.csv` extension are quantification outputs per-triangle. These are the files you'll use to generate statistics and plots.
-* Files with `.log` extension are log files, mostly from the output of the pycurv run.
-* Quantifications (plots and statistical tests) are output in csv, svg, and png formats.
+## Step 5: Thickness Measurement (Approximately 5 minutes for one tomogram)
+Thickness measurement is done in two steps in morphometrics:
+```bash
+`morphometrics sample_density config.yml` # samples the raw tomogram density along surface normals.
+`morphometrics measure_thickness config.yml` # calculates the thickness of the membrane.
+```
+
+This is another key metric for understanding membrane properties and can be used to analyze the impact of protein localization on membrane function - for instance, we have shown that prohibitin thins the membrane locally in mitochondrial inner membranes.
+
+Thickness also automatically generates some summary statistics from the run - check out some of the generated png/svg files in the morphometrics output directory, as well as loading surfaces into paraview.
+
+
+## Step 6: Quick statistics and plots
+One thing you may want to do with all your quantified surfaces is to generate histograms and 2D histograms to visualize the distribution of various morphological features. If you have lots of tomograms, you may also want to do some summary statistics - we aren't doing this today but we have the stats library for doing that! With that said, if you don't want to write python, just grab all our CSVs, load them into R studio or Excel or whatever your favorite tool for statistics is, and go to town!
+
+```bash
+morphometrics histogram YTC041_1_lam4_2_ts_002_labels_IMM.AVV_rh9.vtp -n curvedness_VV                  # area-weighted histogram
+morphometrics hist2d  YTC041_1_lam4_2_ts_002_labels_IMM.AVV_rh9.vtp -n1 curvedness_VV -n2 OMM_dist     # area-weighted 2D histogram
+```
+
+## Step 7 (Bonus round): Lets make some contextual structural biology figures!
+Using `morphometrics export_obj` you can export the quantified surfaces as high-resolution OBJ files with color-coded features. These are compatible with lots of other softwares, including Blender, ChimeraX, and Surforama. 
+
+```bash
+morphometrics export_obj config.yml YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.vtp --list-features      # see colorable arrays
+morphometrics export_obj config.yml YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.vtp --feature IMM_dist --cmap magma
+```
+
+I have included instructions to make two great visualizations. Depending on time, we are going to do these both together:
+1. Head to [ChimeraX Vis](chimerax.md) to make your own version of the cover figure from our JCB paper
+2. Head to [Surforama](surforama.md) to see how to use these OBJ files for locally visualizing membrane-associated proteins.
+
+
+
+## Not in this lesson: 
+```bash
+morphometrics stats config.yml <name>   # assembles an Experiment pickle across all tomograms in the data folder
+```
+This is where multi-tomogram, multi-condition comparison happens — the heart of moving from phenomenology to statistics. With one tomogram there's not much to aggregate, so this mostly matters once you have a real dataset. Analysis from the pickle is done in pandas via the `Experiment`/`Tomogram` classes in `surface_morphometrics.morphometrics_stats`.
+
+### Under the hood / running individual modules
+The pipeline steps wrap lower-level modules in the `surface_morphometrics` package, which you can also run directly with `python -m surface_morphometrics.<module>`:
+
+* **Mesh generation** (`make_meshes`): `mrc2xyz` (segmentation → point cloud) → `xyz2ply` (screened-Poisson reconstruction + masking) → `ply2vtp` (→ vtp for pycurv).
+* **Morphology extraction**: `curvature` (pycurv), `refine_mesh`/`accept_refinement`, `intradistance_verticality` + `interdistance_orientation` (wrapped by `distances_orientations`), `sample_density` + `measure_thickness`.
+
+
+## Summary of File Types
+* `.xyz` — point clouds (flat text `X Y Z` per line), nm or Å scale.
+* `.ply` — surface meshes (binary), nm or Å scale; open in [Meshlab](https://www.meshlab.net/) and many other tools.
+* `.surface.vtp` — the same meshes in [VTK](https://vtk.org/) format; this is the input pycurv reads to build graphs. Open in [Paraview](https://www.paraview.org/) / [pyvista](https://docs.pyvista.org/).
+* `.AVV_rh*.vtp` — pycurv outputs carrying the quantifications (the `rh` number is your `radius_hit`); richest for Paraview/pyvista visualization.
+* `.gt` — triangle graphs (`graph-tool`); fast neighbor operations, not for manual inspection.
+* `.csv` — per-triangle quantification tables; the files you use for statistics and plots.
+* `.log` — logs, mostly from pycurv.
+* Quantification outputs (plots/tests) are written as csv, svg, and png.
+
+!!! note "Parallelizing on a cluster"
+    Most steps also accept a single input so you can run one tomogram/surface per job, e.g. `morphometrics pycurv config.yml TE3_OMM.surface.vtp` or `morphometrics distances_orientations config.yml TE3.mrc`. The pycurv and thickness steps are the slow ones; parallelizing them per tomogram is the way to scale to dozens of tomograms.

@@ -10,28 +10,37 @@ If you want to do morphometrics, you can move quickly from a MemBrain segmentati
 ## Setup
 
 ```bash
-conda activate membrain-seg   # TODO: confirm env name
+conda activate membrain-seg
 ```
 
 ## Running MemBrain-seg
 
 ```bash
 membrain segment \
-  --tomogram-path TE3_tomo.mrc \
-  --ckpt-path /sw/membrain-seg/models/<current_model>.ckpt \
+  --tomogram-path tomograms/YTC041_1_lam4_2_ts_002.mrc \
+  --ckpt-path /sw/membrain-seg/models/MemBrain_seg_v10_beta.ckpt \
   --store-probabilities
-3dmod <path_to_predictions>
 ```
 
-Usually, this is all you have to do. However, sometimes the default threshold is a bit too generous and membranes merge into each other. If that happens, look at the score map and pick a threshold that separates the membranes cleanly:
+Usually, this is all you have to do. However, sometimes the default threshold is a bit too generous and membranes merge into each other. In this case, that happens a decent bit. We will use the score map to improve the thresholding for a better result. Look at the score map and pick a threshold that separates the membranes cleanly:
 
 ```bash
-3dmod <path_to_scoremap>
-membrain thresholds --scoremap-path <path_to_scoremap> --thresholds X
+3dmod predictions/YTC041_1_lam4_2_ts_002_scores.mrc
+```
+Use the pixel view tool to examine the pixel values in the score map to determine a suitable threshold. I quite like 3.5 personally for this tomogram, but others may be quite different.
+
+Once you've decided, apply the threshold directly to the score map using the `membrain thresholds` command:
+
+```bash
+membrain thresholds --scoremap-path predictions/YTC041_1_lam4_2_ts_002_scores.mrc --thresholds 3.5
 ```
 
-Determine `X` by looking at the pixel levels in the score map — you want membranes to be well separated.
+This should be pretty permissive - if you want a different threshold, go for it! You may notice there are still a couple small bridging artifacts - these can be removed with a paintbrush in Amira, Dragonfly, or Ais, but today we're going to use geometric clustering in [Mosaic](mosaic.md) to clean them up.
 
+**If you've got a good thresholded segmentation, move on to the [Mosaic](mosaic.md) step now!**
+
+
+# Other membrain stuff we won't to today
 ## Separating components
 
 For morphometrics you want each membrane as its own semantic class. I recommend doing this interactively in [Mosaic](mosaic.md), but you can also split connected components automatically:
@@ -42,7 +51,7 @@ membrain components \
   --connected-component-thres 50
 ```
 
-And that's it! You should now have a set of membrane segmentations ready to be turned into meshes for morphometrics. For today's exercises we'll hand this off to Mosaic for cleanup, and use some precalculated segmentations for the morphometrics section — but if you're feeling brave, feel free to carry your own segmentation all the way through.
+This doesn't do a great job when there are small bridging densities like this one has.
 
 ## Going further
 

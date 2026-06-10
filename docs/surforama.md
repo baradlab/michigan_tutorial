@@ -2,13 +2,11 @@
 
 [Surforama](https://github.com/cellcanvas/surforama) is a [napari](https://napari.org/) plugin for **interactively exploring volumetric data by leveraging 3D surfaces**. Given a membrane surface mesh, it projects the local tomogram density onto the surface so you can see what's sitting on (or in) the membrane, annotate and pick particles directly on the surface, and export oriented particles as RELION-formatted STAR files for subtomogram averaging.
 
-It pairs naturally with the surfaces we build in [Mosaic](mosaic.md) / [Surface Morphometrics](morphometrics.md): once you have a clean membrane mesh, Surforama turns it into a tool for finding and orienting membrane-associated proteins. Developed by Kevin Yamauchi, Kyle Harrington, and collaborators ([teamtomo](https://github.com/teamtomo) / [cellcanvas](https://github.com/cellcanvas)).
+It pairs naturally with the surfaces we build in [Surface Morphometrics](morphometrics.md): once you have a clean membrane mesh, Surforama turns it into a tool for finding and orienting membrane-associated proteins. Developed by Kevin Yamauchi, Kyle Harrington, and collaborators ([teamtomo](https://github.com/teamtomo) / [cellcanvas](https://github.com/cellcanvas)).
 
 * **Repo:** <https://github.com/cellcanvas/surforama>
 * **Paper:** [Surforama: interactive exploration of volumetric data by leveraging 3D surfaces (bioRxiv 2024)](https://www.biorxiv.org/content/10.1101/2024.05.30.596601v2)
 
-!!! note "Confirm before the workshop — TODO"
-    Confirm this year's env/install and which surface + tomogram we load, then fill in the concrete click-path below.
 
 ## When to use it
 
@@ -17,23 +15,23 @@ It pairs naturally with the surfaces we build in [Mosaic](mosaic.md) / [Surface 
 * You want oriented particles exported to **RELION STAR** files to feed subtomogram averaging.
 
 ## Setup
+We need to make a surface mesh from our tomogram data, and leave it at the current scale, since surforama expects a nm scale surface. Unfortunately, I discovered a bug with obj scaling that only shows up in certain cases - including these workstations! To deal with that, grab the obj file from here:
 
+
+We also want to 
 ```bash
-# TODO: confirm env + install on the workshop machines
-conda activate surforama     # placeholder
-pip install surforama        # installs the napari plugin
-napari
+module load imod
+mtffilter tomograms/YTC041_1_lam4_2_ts_002.mrc -dec 0.5 -def 5 YTC041_1_lam4_2_ts_002_dec.mrc
 ```
 
-## Workflow
+```bash
+conda activate surforama    
+surforama --image-path YTC041_1_lam4_2_ts_002_dec.mrc --mesh-path morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9_curvedness_VV.obj
+```
 
-!!! note "TODO: fill in concrete steps from the workshop machines"
+Try changing the parameters of the offset and the thickness to project - you should be able to find some dark spots at an offset around 5-8 that correspond to membrane-associated ribosomes! 
 
-1. Launch `napari` and open the Surforama plugin (Plugins menu).
-2. Load the tomogram and a membrane surface mesh (e.g. the `.vtp`/mesh from Mosaic or Surface Morphometrics).
-3. Project the tomogram density onto the surface and adjust the sampling depth/contrast to see membrane-associated features.
-4. Pick particles on the surface; orientations are taken from the surface normals.
-5. Export the oriented particles as a RELION STAR file for subtomogram averaging.
+If you want, you can try setting up a star file and picking those particles - these get their initial orientations directly from the surface normals, so you get a lot of the geometric advantages Mart and Will talked about for contextual particle picking.
 
 ## Outputs
 

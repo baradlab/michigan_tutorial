@@ -29,7 +29,7 @@ morphometrics new_config                     # writes a fully-commented config.y
     * `segmentation_values` — the label-value → name mapping for your data. My mapping is as follows:
       ```yaml
       segmentation_values:
-        IMM: 1     # TODO: set to match our segmentation
+        IMM: 1     
         OMM: 2
         ER: 3
         PM: 4
@@ -127,7 +127,8 @@ morphometrics export_obj config.yml YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.vt
 ```
 
 I have included instructions to make two great visualizations. Depending on time, we are going to do these both together:
-1. Head to [ChimeraX Vis](chimerax.md) to make your own version of the cover figure from our JCB paper
+
+1. Head to [ChimeraX](chimerax.md) to make your own version of the cover figure from our JCB paper, but with more color
 2. Head to [Surforama](surforama.md) to see how to use these OBJ files for locally visualizing membrane-associated proteins.
 
 

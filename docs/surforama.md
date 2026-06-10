@@ -17,7 +17,7 @@ It pairs naturally with the surfaces we build in [Surface Morphometrics](morphom
 ## Setup
 Unfortunately, I introduced a scaling bug in my code this week, so you won't be able to make an obj scaled correctly for Surforama. Whoops! Instead, go ahead and grab [surforama.obj](static/surforama.obj)
 
-For surforama, its also helpful to have some deconvolution (or denoising!) done on your data:
+For surforama, its also helpful to have some deconvolution (or denoising!) done on your data. Since we have imod handy and its fast, we'll just do deconvolution quickly:
 ```bash
 module load imod
 mtffilter tomograms/YTC041_1_lam4_2_ts_002.mrc -dec 0.5 -def 5 YTC041_1_lam4_2_ts_002_dec.mrc
@@ -32,6 +32,12 @@ Try changing the parameters of the offset and the thickness to project - you sho
 
 If you want, you can try setting up a star file and picking those particles - these get their initial orientations directly from the surface normals, so you get a lot of the geometric advantages Mart and Will talked about for contextual particle picking.
 
+1. Click "Enable" under pick on surface
+2. Click points on the surface where you see ribosomes
+3. Click "Select File" next to file path and choose a star file name.
+4. Click "Save" to save the picked particles.
+5. Examine your particle picks - they should have phi and psi but rot should be 180/-180 for all!
+
 ## Outputs
 
 * Surface-projected views of the tomogram density for inspection/figures.
@@ -39,6 +45,5 @@ If you want, you can try setting up a star file and picking those particles - th
 * RELION-formatted STAR files ready for subtomogram averaging.
 
 ## Tips
-
-* The quality of your picks depends on the quality of the surface — clean meshing in [Mosaic](mosaic.md) pays off here too.
 * Surface normals give you orientation priors "for free," which is a big head start for averaging membrane proteins.
+* You can also generate isosurfaces for this in membrain - it doesnt have to be fancy morphometrics surfaces. With that said, we love our fancy surfaces!

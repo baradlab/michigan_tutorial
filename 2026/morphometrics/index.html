@@ -830,7 +830,7 @@ morphometrics<span class="w"> </span>new_config<span class="w">                 
 <li><code>work_dir: ./morphometrics/</code> — folder for output files; <code>exp_name</code> is not currently used in this release.</li>
 <li><code>segmentation_values</code> — the label-value → name mapping for your data. My mapping is as follows:
   <div class="highlight"><pre><span></span><code><span class="nt">segmentation_values</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">IMM</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w">     </span><span class="c1"># TODO: set to match our segmentation</span>
+<span class="w">  </span><span class="nt">IMM</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w">     </span>
 <span class="w">  </span><span class="nt">OMM</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="w">  </span><span class="nt">ER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
 <span class="w">  </span><span class="nt">PM</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span>
@@ -898,9 +898,11 @@ morphometrics<span class="w"> </span>hist2d<span class="w">  </span>YTC041_1_lam
 <div class="highlight"><pre><span></span><code>morphometrics<span class="w"> </span>export_obj<span class="w"> </span>config.yml<span class="w"> </span>YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.vtp<span class="w"> </span>--list-features<span class="w">      </span><span class="c1"># see colorable arrays</span>
 morphometrics<span class="w"> </span>export_obj<span class="w"> </span>config.yml<span class="w"> </span>YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.vtp<span class="w"> </span>--feature<span class="w"> </span>IMM_dist<span class="w"> </span>--cmap<span class="w"> </span>magma
 </code></pre></div>
-<p>I have included instructions to make two great visualizations. Depending on time, we are going to do these both together:
-1. Head to <a href="../chimerax/">ChimeraX Vis</a> to make your own version of the cover figure from our JCB paper
-2. Head to <a href="../surforama/">Surforama</a> to see how to use these OBJ files for locally visualizing membrane-associated proteins.</p>
+<p>I have included instructions to make two great visualizations. Depending on time, we are going to do these both together:</p>
+<ol>
+<li>Head to <a href="../chimerax/">ChimeraX</a> to make your own version of the cover figure from our JCB paper, but with more color</li>
+<li>Head to <a href="../surforama/">Surforama</a> to see how to use these OBJ files for locally visualizing membrane-associated proteins.</li>
+</ol>
 <h2 id="not-in-this-lesson">Not in this lesson:</h2>
 <p><div class="highlight"><pre><span></span><code>morphometrics<span class="w"> </span>stats<span class="w"> </span>config.yml<span class="w"> </span>&lt;name&gt;<span class="w">   </span><span class="c1"># assembles an Experiment pickle across all tomograms in the data folder</span>
 </code></pre></div>

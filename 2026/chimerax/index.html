@@ -470,6 +470,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#make-that-figure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Make that figure!
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -553,6 +564,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#make-that-figure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Make that figure!
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -574,10 +596,10 @@
 
 
 <h1 id="chimerax-and-artiax-visualization">ChimeraX (and ArtiaX) Visualization</h1>
-<p>Using <a href="https://www.cgl.ucsf.edu/chimerax/">ChimeraX</a> with the <a href="https://github.com/FrangakisLab/ArtiaX">ArtiaX Plugin</a> and our quantified surfaces, we will make a (hopefully attractive) visualization of our data.</p>
+<p>Using <a href="https://www.cgl.ucsf.edu/chimerax/">ChimeraX</a> with the <a href="https://github.com/FrangakisLab/ArtiaX">ArtiaX Plugin</a> and our quantified surfaces, we will make a (hopefully attractive) visualization of our data. We'll do this on the work machines, but it will feel MUCH snappier on your home workstation!</p>
 <h2 id="setup">Setup</h2>
 <ol>
-<li>Start ChimeraX with <code>module load chimerax &amp;&amp; chimerax</code></li>
+<li>Start ChimeraX with <code>module load chimera &amp;&amp; chimerax</code></li>
 <li>Install ArtiaX: Tools -&gt; More tools to get to the toolshed, then search and install ArtiaX. Restart ChimeraX to activate ArtiaX! </li>
 <li>Download the star file: <a href="../static/clean_ribosomes.star">clean_ribosomes.star</a>. ArtiaX has a (new as of a couple weeks ago) open bug with starfiles with strings in it, so I am just providing a clean starfile for you. I made it with the starfile python repository </li>
 </ol>
@@ -586,6 +608,20 @@
 <div class="highlight"><pre><span></span><code>morphometrics<span class="w"> </span>export_obj<span class="w"> </span>--feature<span class="w"> </span>IMM_dist<span class="w"> </span>config.yml<span class="w"> </span>morphometrics/YTC041_1_lam4_2_ts_002_labels_OMM.AVV_rh9.vtp
 </code></pre></div>
 <p>This will make an obj file with an associated mtl (material) file, which records color for the obj in a way that lots of different softwares read.</p>
+<h2 id="make-that-figure">Make that figure!</h2>
+<ol>
+<li>Load the obj file with chimeraX</li>
+<li>Launch ArtiaX</li>
+<li>Add clean_ribosomes.star to the artiaX particle lists</li>
+<li>Go to Select/Manipulate and set the Pixel Size factors to 3.3,1 </li>
+<li>Add your raw tomogram to the artiaX tomogram list</li>
+<li>Under tomograms menu, average 5 slabs.</li>
+<li>Choose the orthoslice you want, near the edge - or hide it altogether!</li>
+<li>Fetch EMDB-48752!</li>
+<li>Under visualization, add new surface, and choose 48752.</li>
+<li>Enable soft lighting</li>
+<li>Take pictures, enjoy!</li>
+</ol>
 
 
 

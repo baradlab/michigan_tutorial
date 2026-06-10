@@ -630,7 +630,7 @@
 </ul>
 <h2 id="setup">Setup</h2>
 <p>Unfortunately, I introduced a scaling bug in my code this week, so you won't be able to make an obj scaled correctly for Surforama. Whoops! Instead, go ahead and grab <a href="../static/surforama.obj">surforama.obj</a></p>
-<p>For surforama, its also helpful to have some deconvolution (or denoising!) done on your data:
+<p>For surforama, its also helpful to have some deconvolution (or denoising!) done on your data. Since we have imod handy and its fast, we'll just do deconvolution quickly:
 <div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>imod
 mtffilter<span class="w"> </span>tomograms/YTC041_1_lam4_2_ts_002.mrc<span class="w"> </span>-dec<span class="w"> </span><span class="m">0</span>.5<span class="w"> </span>-def<span class="w"> </span><span class="m">5</span><span class="w"> </span>YTC041_1_lam4_2_ts_002_dec.mrc
 </code></pre></div></p>
@@ -639,6 +639,13 @@ surforama<span class="w"> </span>--image-path<span class="w"> </span>YTC041_1_la
 </code></pre></div>
 <p>Try changing the parameters of the offset and the thickness to project - you should be able to find some dark spots at an offset around 5-8 that correspond to membrane-associated ribosomes! </p>
 <p>If you want, you can try setting up a star file and picking those particles - these get their initial orientations directly from the surface normals, so you get a lot of the geometric advantages Mart and Will talked about for contextual particle picking.</p>
+<ol>
+<li>Click "Enable" under pick on surface</li>
+<li>Click points on the surface where you see ribosomes</li>
+<li>Click "Select File" next to file path and choose a star file name.</li>
+<li>Click "Save" to save the picked particles.</li>
+<li>Examine your particle picks - they should have phi and psi but rot should be 180/-180 for all!</li>
+</ol>
 <h2 id="outputs">Outputs</h2>
 <ul>
 <li>Surface-projected views of the tomogram density for inspection/figures.</li>
@@ -647,8 +654,8 @@ surforama<span class="w"> </span>--image-path<span class="w"> </span>YTC041_1_la
 </ul>
 <h2 id="tips">Tips</h2>
 <ul>
-<li>The quality of your picks depends on the quality of the surface — clean meshing in <a href="../mosaic/">Mosaic</a> pays off here too.</li>
 <li>Surface normals give you orientation priors "for free," which is a big head start for averaging membrane proteins.</li>
+<li>You can also generate isosurfaces for this in membrain - it doesnt have to be fancy morphometrics surfaces. With that said, we love our fancy surfaces!</li>
 </ul>
 
 

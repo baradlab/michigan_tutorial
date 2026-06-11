@@ -862,7 +862,7 @@ meshlab<span class="w"> </span>morphometrics/*.ply
 You can play around with the visualization here - try turning on the triangle edge display, or coloring by curvature. If we have time, I will walk through these, but if not we may move on quickly. Generally, you want to make sure you've had eyes on EVERY surface for at least a moment before proceeding through the rest of the pipeline - garbage in, garbage out, after all!</p>
 <h2 id="step-2-building-a-graph-and-measuring-curvature-robustly-with-pycurv-also-ran-in-6-minutes-on-my-machine">Step 2: Building a graph and measuring curvature robustly with <code>pycurv</code>. (Also ran in ~6 minutes on my machine)</h2>
 <p>In this step, we will use <a href="https://github.com/kalemaria/pycurv">pycurv</a> to build a graph and measure curvature using a vector voting algorithm. These graphs are what we use for all other operations going forward. Notably, the upstream pycurv software is great but quite slow; morphometrics uses a fork that has been extensively vectorized to deliver many-fold performance improvements. </p>
-<div class="highlight"><pre><span></span><code>morphometrics<span class="w"> </span>curvature<span class="w"> </span>config.yml
+<div class="highlight"><pre><span></span><code>morphometrics<span class="w"> </span>pycurv<span class="w"> </span>config.yml
 </code></pre></div>
 <p>The important output files from this step are the graph files (<code>.AVV_rh9.gt</code>) and the quantified surface files (<code>.AVV_rh9.vtp</code>). The graph can't be easily visualized, but the quantified surfaces can be loaded into paraview for analysis.</p>
 <div class="highlight"><pre><span></span><code>module<span class="w"> </span>load<span class="w"> </span>paraview

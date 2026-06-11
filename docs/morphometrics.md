@@ -66,7 +66,7 @@ You can play around with the visualization here - try turning on the triangle ed
 In this step, we will use [pycurv](https://github.com/kalemaria/pycurv) to build a graph and measure curvature using a vector voting algorithm. These graphs are what we use for all other operations going forward. Notably, the upstream pycurv software is great but quite slow; morphometrics uses a fork that has been extensively vectorized to deliver many-fold performance improvements. 
 
 ```bash
-morphometrics curvature config.yml
+morphometrics pycurv config.yml
 ```
 
 The important output files from this step are the graph files (`.AVV_rh9.gt`) and the quantified surface files (`.AVV_rh9.vtp`). The graph can't be easily visualized, but the quantified surfaces can be loaded into paraview for analysis.
